@@ -1,8 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center">
-        <div class="q-pa-md" style="width: 400px; max-width: 92vw">
+      <q-page class="flex flex-center bg-green-4">
+        <div class="q-pa-md" style="width: 380px; max-width: 90vw">
           <div class="text-h5 q-mb-md">{{ $t('login.title') }}</div>
 
           <q-form @submit.prevent="onSubmit">
@@ -32,7 +32,7 @@
 
             <q-btn
               class="q-mt-md full-width"
-              color="primary"
+              color="green"
               :label="$t('login.submit')"
               type="submit"
             />
