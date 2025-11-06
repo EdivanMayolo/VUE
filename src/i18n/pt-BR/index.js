@@ -5,5 +5,13 @@ export default {
     password: 'Senha',
     forgot: 'Esqueceu a senha?',
     submit: 'Entrar'
+  },
+  reset: {
+  title: 'REDEFINIAR SENHA',
+    new: 'Nova Senha',
+    confirm: 'Confirme sua Senha',
+    submit: 'Enviar',
+    backToLogin: 'Voltar ao login'
   }
+
 }
