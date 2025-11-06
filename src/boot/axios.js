@@ -22,6 +22,7 @@
 // })
 
 // export { api }
+
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 

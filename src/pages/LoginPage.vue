@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center bg-green-4">
+      <q-page class="flex flex-center bg-green-3 text-black" style="min-height:100vh;">
         <div class="q-pa-md" style="width: 380px; max-width: 90vw">
           <div class="text-h5 q-mb-md">{{ $t('login.title') }}</div>
 
@@ -27,7 +27,12 @@
             />
 
             <div class="q-mt-xs text-right">
-              <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" />
+              <!-- <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" /> -->
+               <!-- <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" @click="$router.push('/redefinir-senha')" /> -->
+               <q-btn flat color="secondary" :label="$t('login.forgot')" @click="$router.push('/redefinir-senha')" />
+
+
+
             </div>
 
             <q-btn

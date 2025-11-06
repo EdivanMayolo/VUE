@@ -27,7 +27,7 @@
             />
 
             <div class="q-mt-xs text-right">
-              <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" />
+              <q-btn flat color="secondary" :label="$t('login.forgot')" @click="$router.push('/redefinir-senha')" />
             </div>
 
             <q-btn
