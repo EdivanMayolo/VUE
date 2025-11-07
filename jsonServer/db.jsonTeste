@@ -1,0 +1,12 @@
+{
+  "Apartamento": [{"id":1,"numeroApto":1,"andar":1,"bloco":1}],
+
+  "Morador": ["id","nome","cpf","email","telefone"],
+
+  "Despesa_Fixa": ["id","descricao","valor"],
+
+  "Despesa_Variavel": ["id","descricao","valor","data"],
+
+  "Fatura":["id","numeroApto","mes", "ano","valorFixo","valorVariavel","valorTotal","dataVencimento"]
+
+}
