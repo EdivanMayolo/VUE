@@ -1,14 +1,14 @@
 const routes = [
   {
-    path: '/login',
+    path: '/',
     component: () => import('pages/LoginPage.vue'),
   },
-  // {
-  //   path: '/redefinir-senha',
-  //   component: () => import('pages/ResetPasswordPage.vue')
-  // },
   {
-    path: '/',
+    path: '/redefinir-senha',
+    component: () => import('pages/ResetPasswordPage.vue')
+  },
+  {
+    path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') },
                { path: 'login2', component: () => import('pages/LoginPage.vue') },

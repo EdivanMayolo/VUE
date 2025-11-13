@@ -7,7 +7,7 @@ export default {
     submit: 'Entrar'
   },
   reset: {
-  title: 'REDEFINIAR SENHA',
+  title: 'REDEFINIR SENHA',
     new: 'Nova Senha',
     confirm: 'Confirme sua Senha',
     submit: 'Enviar',

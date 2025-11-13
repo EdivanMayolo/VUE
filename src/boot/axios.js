@@ -28,7 +28,7 @@ import axios from 'axios'
 
 // Aqui você define a URL base da sua API
 const api = axios.create({
-  baseURL: 'http://localhost:9001/login' // troque pelo endereço da sua API
+  baseURL: 'http://localhost:3000' // troque pelo endereço da sua API
 })
 
 // (opcional) Interceptor para incluir token de login nas requisições

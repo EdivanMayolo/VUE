@@ -2,6 +2,11 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center bg-green-3 text-black" style="min-height:100vh;">
+        
+        <!-- <q-btn @click="alunoStore.getAlunos()" label="Carrega Alunos" />
+        ALUNOS: 
+        {{ alunoStore.alunos }} -->
+
         <div class="q-pa-md" style="width: 380px; max-width: 90vw">
           <div class="text-h5 q-mb-md">{{ $t('login.title') }}</div>
 
@@ -58,6 +63,10 @@ const router = useRouter()
 
 const user = ref('')
 const pass = ref('')
+
+// import { useAlunoStore } from 'src/stores/aluno-store'
+// const alunoStore = useAlunoStore();
+
 const requiredMsg = computed(() => $q.lang.label.required || 'Obrigatório')
 
 const onSubmit = () => {
