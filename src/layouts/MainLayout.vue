@@ -70,12 +70,12 @@ const linksList = [
   },
   {
     title: 'Despesa Fixa',
-     to :'despesaFixa',
+     to :'despesa-fixa',
     //icon: 'person',
   },
   {
     title: 'Despesa Variavel',
-     to :'despesaVariavel',
+     to :'despesa-variavel',
     //icon: 'person',
   },
   {
