@@ -15,6 +15,7 @@ const routes = [
                { path: '/redefinir-senha', component: () => import('pages/ResetPasswordPage.vue')},
                { path: '/dashboard', component: () => import('pages/DashboardPage.vue') },
                { path: '/apartamento',component: () => import('pages/CadastroApartamentoPage.vue')},
+               { path: '/morador', component: () => import('pages/CadastroMoradorPage.vue') }
     ],
   },
   
