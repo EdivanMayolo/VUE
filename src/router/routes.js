@@ -17,7 +17,8 @@ const routes = [
                { path: '/apartamento',component: () => import('pages/CadastroApartamentoPage.vue')},
                { path: '/morador', component: () => import('pages/CadastroMoradorPage.vue') },
                { path: '/despesa-fixa', component: () => import('pages/CadastroDespesaFixaPage.vue') },
-               { path: '/despesa-variavel', component: () => import('pages/CadastroDespesaFixaPage.vue') }
+               { path: '/despesa-variavel', component: () => import('pages/CadastroDespesaVariavelPage.vue') },
+                { path:'/fatura',component: () => import('pages/CadastroFaturaPage.vue') }
     ],
   },
   

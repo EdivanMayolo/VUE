@@ -5,7 +5,7 @@
 
         <!-- TÍTULO -->
         <div class="text-h4 q-mt-xl q-mb-lg text-center text-weight-light">
-          Cadastro de Despesa
+          Cadastro de Despesa Variável
         </div>
 
         <!-- FORMULÁRIO -->
@@ -82,12 +82,11 @@ const $q = useQuasar()
 
 const form = ref({
   descricao: '',
-  valor: '' 
+  valor: '' // ex.: "150,00"
 })
 
 const isValorValido = (val) => {
   if (!val) return false
-  // troca vírgula por ponto e testa se é número
   const normalizado = String(val).replace('.', '').replace(',', '.')
   return !isNaN(normalizado) && Number(normalizado) >= 0
 }
@@ -99,18 +98,20 @@ const onSubmit = () => {
     valor: Number(normalizado)
   }
 
-  console.log('Despesa variavel (mock, sem API ainda):', payload)
+  console.log('Despesa variável (mock, sem API ainda):', payload)
 
   $q.notify({
     type: 'positive',
-    message: 'Despesa variavel cadastrada (mock, sem API).',
+    message: 'Despesa variável cadastrada (mock, sem API).',
     position: 'top'
   })
-   form.value = { descricao: '', valor: '' }
+
+  // Se quiser limpar:
+  // form.value = { descricao: '', valor: '' }
 }
 
 const voltarMenu = () => {
-  router.push({ path:'/' })
+  router.push({ name: 'dashboard' })
 }
 </script>
 
