@@ -128,7 +128,7 @@ const onSubmit = async () => {
   }
 }
 const voltarMenu = () => {
-  router.push({ path: '/' })
+  router.push({ path:'/dashboard' })
 }
 </script>
 <style scoped>

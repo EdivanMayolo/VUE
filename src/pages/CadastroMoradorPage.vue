@@ -156,7 +156,7 @@ const onSubmit = () => {
 }
 
 const voltarMenu = () => {
-  router.push({ path:'/' }) // ou a rota que você usa como "menu"
+  router.push({ path:'/dashboard' }) // ou a rota que você usa como "menu"
 }
 </script>
 

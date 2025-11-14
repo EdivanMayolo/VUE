@@ -4,17 +4,16 @@
       <div class="col-12 col-md-8 col-lg-6">
 
         <!-- TÍTULO -->
+         
         <div class="text-h4 q-mt-xl q-mb-lg text-center text-weight-light">
           Cadastro Fatura Mensal
         </div>
-
         <!-- FORMULÁRIO -->
         <q-form @submit.prevent="onSubmit">
-          <div class="q-gutter-md">
-
+          <div class="column q-gutter-xs">
             <!-- NÚMERO DO APTO -->
             <div>
-              <div class="text-subtitle2 q-mb-xs">Número do Apto</div>
+              <div class="q-gutter-xs">Número do Apto</div>
               <q-input
                 v-model="form.apto"
                 outlined
@@ -29,7 +28,7 @@
 
             <!-- MÊS -->
             <div>
-              <div class="text-subtitle2 q-mb-xs">Mês</div>
+              <div class="q-gutter-xs">Mês</div>
               <q-input
                 v-model="form.mes"
                 outlined
@@ -47,7 +46,7 @@
 
             <!-- ANO -->
             <div>
-              <div class="text-subtitle2 q-mb-xs">Ano</div>
+              <div class="q-gutter-xs">Ano</div>
               <q-input
                 v-model="form.ano"
                 outlined
@@ -68,7 +67,7 @@
 
             <!-- VALOR FIXO -->
             <div>
-              <div class="text-subtitle2 q-mb-xs">Valor Fixo</div>
+              <div class="q-gutter-xs">Valor Fixo</div>
               <q-input
                 v-model="form.valorFixo"
                 outlined
@@ -87,7 +86,7 @@
 
             <!-- VALOR VARIÁVEL -->
             <div>
-              <div class="text-subtitle2 q-mb-xs">Valor Variável</div>
+              <div class="q-gutter-xs">Valor Variável</div>
               <q-input
                 v-model="form.valorVariavel"
                 outlined
@@ -107,7 +106,7 @@
           </div>
 
           <!-- BOTÕES SALVAR / VOLTAR -->
-          <div class="botoes-container">
+          <div class="botoes-container">            
             <q-btn
               label="SALVAR"
               color="green"
@@ -188,7 +187,7 @@ const onSubmit = () => {
 }
 
 const voltarMenu = () => {
-  router.push({ name: 'dashboard' })
+  router.push({ path:'/dashboard' })
 }
 
 const abrirFaturas = () => {
@@ -219,14 +218,14 @@ const abrirFaturas = () => {
 }
 
 .botao-faturas-container {
-  margin-top: 16px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
 }
 
 .btn-acao {
   width: 250px;
-  height: 48px;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -111,7 +111,7 @@ const onSubmit = () => {
 }
 
 const voltarMenu = () => {
-  router.push({ name: 'dashboard' })
+  router.push({ path:'/dashboard' })
 }
 </script>
 
