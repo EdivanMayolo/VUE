@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center">
@@ -62,4 +62,4 @@ const onSubmit = () => {
   // por enquanto só navega para testar o fluxo:
   router.push('/dashboard')
 }
-</script>
+</script> -->

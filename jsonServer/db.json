@@ -1,12 +1,12 @@
 {
-  "Apartamento": [],
+  "Apartamento": [{"id":1,"numeroApto":1,"andar":1,"bloco":1}],
 
-  "Morador": [],
+  "morador": [],
 
-  "Despesa_Fixa": [],
+  "despesa_Fixa": [],
 
-  "Despesa_Variavel": [],
+  "despesa_Variavel": [],
 
-  "Fatura":[]
+  "fatura":[]
 
 }

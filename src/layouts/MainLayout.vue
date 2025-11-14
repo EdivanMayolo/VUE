@@ -1,18 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+      <q-toolbar style="background-color: green">
+        <q-btn flat dense round icon="menu" aria-label="Menu"/>
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title>  </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <!-- <q-item-label header> Essential Links </q-item-label> -->
 
         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
       </q-list>
@@ -30,52 +30,69 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Home',
+    to: '/',
+    icon: 'house',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
+    title: 'Aptos Vagos',
+    // to :''
     icon: 'code',
-    link: 'https://github.com/quasarframework',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
+    title: 'Agua',
+    //to: 'agua',
+    icon: 'water',    
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
+    title: 'Caixa',
+    // to :'',
+    icon: '       ',
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
+    title: 'Boletos',
+    icon: 'money',    
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
+    title: 'CADASTROS',
+     //to :'cadastros',
+    icon: 'person',
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Apartamento',
+     to :'apartamento',
+    //icon: 'person',
+  },
+  {
+    title: 'Morador',
+     to :'morador',
+    //icon: 'person',
+  },
+  {
+    title: 'Despesa Fixa',
+     to :'despesaFixa',
+    //icon: 'person',
+  },
+  {
+    title: 'Despesa Variavel',
+     to :'despesaVariavel',
+    //icon: 'person',
+  },
+  {
+    title: 'Fatura',
+     to :'fatura',
+    //icon: 'person',
+  },
+  {
+    title: 'Logout',
+    to: '/', //conforme tiver que direcionar a pagina
+    icon: 'back',
   },
 ]
 
 const leftDrawerOpen = ref(false)
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+// function toggleLeftDrawer() {
+//   leftDrawerOpen.value = !leftDrawerOpen.value
+// }
 </script>
