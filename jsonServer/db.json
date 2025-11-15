@@ -1,52 +1,66 @@
 {
   "apartamentos": [
     {
-      "id": 1,
-      "numeroApto": 1,
-      "andar": 1,
-      "bloco": 1
+      "id": "2",
+      "numero": "204",
+      "andar": "2",
+      "bloco": "Oeste",
+      "ativo": true
     },
     {
-      "id": "1aa6",
-      "numero": "123123",
-      "andar": 123,
-      "bloco": "asdasdas"
-    },
-    {
-      "id": "0f93",
-      "numero": "104",
-      "andar": 10,
-      "bloco": "Sul"
-    },
-    {
-      "id": "0e3f",
+      "id": "3",
       "numero": "505",
       "andar": 1,
-      "bloco": "Norte"
+      "bloco": "Norte",
+      "ativo": true
     },
     {
-      "id": "f4c7",
-      "numero": "89",
-      "andar": 8768,
-      "bloco": "uuhakjshdkahjd"
+      "id": "4",
+      "numero": "104",
+      "andar": "3",
+      "bloco": "Leste",
+      "ativo": true
     },
     {
-      "id": "ddcb",
+      "id": "5",
       "numero": "asdasd",
       "andar": 87878,
-      "bloco": "hjagsdjhasgdj"
+      "bloco": "hjagsdjhasgdj",
+      "ativo": true
     },
     {
-      "id": "24fd",
+      "id": "6",
       "numero": "1123",
       "andar": 123132123,
-      "bloco": "123123123123"
+      "bloco": "123123123123",
+      "ativo": true
     },
     {
-      "id": "dd0d",
+      "id": "7",
       "numero": "208",
       "andar": 2,
-      "bloco": "B"
+      "bloco": "B",
+      "ativo": true
+    },
+    {
+      "id": "8",
+      "numero": "9999",
+      "andar": 45,
+      "bloco": "SAFAdinho",
+      "ativo": true
+    },
+    {
+      "id": "7a92",
+      "numero": "408",
+      "andar": "4",
+      "bloco": "Sul",
+      "ativo": true
+    },
+    {
+      "id": "c418",
+      "numero": "208",
+      "andar": "2",
+      "bloco": "A"
     }
   ],
   "morador": [

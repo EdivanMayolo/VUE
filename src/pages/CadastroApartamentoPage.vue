@@ -1,178 +1,276 @@
-<template>
-  <q-page class="bg-green-3 text-black cadastro-apto-page">
-    <div class="row justify-center">
-      <div class="col-12 col-md-8 col-lg-6">
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useApartamentoStore } from 'src/stores/apartamento-store'
 
-        <!-- Título -->
-        <div class="text-h4 q-mt-xl q-mb-lg text-center text-weight-light">
+const $q = useQuasar()
+const router = useRouter()
+const apartamentoStore = useApartamentoStore()
+
+// ---------- FORMULÁRIO DE CADASTRO ----------
+const numero = ref('')
+const andar = ref('')
+const bloco = ref('')
+
+function resetForm () {
+  numero.value = ''
+  andar.value = ''
+  bloco.value = ''
+}
+
+async function salvarApartamento () {
+  try {
+    await apartamentoStore.criar({
+      numero: numero.value,
+      andar: andar.value,
+      bloco: bloco.value
+    })
+    $q.notify({ type: 'positive', message: 'Apartamento cadastrado com sucesso' })
+    resetForm()
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      type: 'negative',
+      message: err?.response?.data?.message || 'Erro ao cadastrar apartamento'
+    })
+  }
+}
+
+function voltarMenu () {
+  router.push('/') // ajuste se o path do menu principal for outro
+}
+
+// ---------- GRID / EDIÇÃO INLINE ----------
+const editingId = ref(null)
+const editForm = ref({})
+
+const columns = [
+  { name: 'id', label: 'ID', field: 'id' },
+  { name: 'numero', label: 'Número', field: 'numero' },
+  { name: 'andar', label: 'Andar', field: 'andar' },
+  { name: 'bloco', label: 'Bloco', field: 'bloco' },
+  { name: 'actions', label: 'Ações', field: 'actions', sortable: false }
+]
+
+onMounted(() => {
+  apartamentoStore.carregarTodos()
+})
+
+function habilitarEdicao (row) {
+  editingId.value = String(row.id)
+  editForm.value = {
+    id: row.id,
+    numero: row.numero,
+    andar: row.andar,
+    bloco: row.bloco
+  }
+}
+
+function cancelarEdicao () {
+  editingId.value = null
+  editForm.value = {}
+}
+
+async function salvarEdicao (row) {
+  try {
+    await apartamentoStore.atualizar(row.id, { ...editForm.value })
+    $q.notify({ type: 'positive', message: 'Apartamento atualizado com sucesso' })
+    cancelarEdicao()
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      type: 'negative',
+      message: err?.response?.data?.message || 'Erro ao atualizar apartamento'
+    })
+  }
+}
+
+// ---------- DELETE REAL ----------
+function removerApartamento (row) {
+  $q.dialog({
+    title: 'Remover apartamento',
+    message: `Deseja realmente remover o apartamento ${row.numero}?`,
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: 'Sim, remover',
+      color: 'negative'
+    },
+    cancelLabel: 'Cancelar'
+  }).onOk(async () => {
+    try {
+      await apartamentoStore.remover(row.id)
+      $q.notify({
+        type: 'positive',
+        message: 'Apartamento removido com sucesso'
+      })
+      // não precisa mexer na lista aqui:
+      // o store.remover já faz this.lista = this.lista.filter(...)
+    } catch (err) {
+      console.error(err)
+      $q.notify({
+        type: 'negative',
+        message: err?.response?.data?.message || 'Erro ao remover apartamento'
+      })
+    }
+  })
+}
+</script>
+
+<template>
+  <q-page class="q-pa-lg" style="background-color: #a5d6a7">
+    <div class="row q-col-gutter-xl">
+      <!-- COLUNA ESQUERDA: FORM "SOLTO" NO FUNDO VERDE -->
+      <div class="col-12 col-md-5">
+        <div class="text-h4 q-mr-sm">
           Cadastre o APTO
         </div>
 
-        <!-- FORMULÁRIO -->
-        <q-form @submit.prevent="onSubmit">
-          <div class="q-gutter-md">
+        <div class="q-gutter-md" style="max-width: 275px">
+          <q-input
+            v-model="numero"
+            label="Número do APTO"
+            filled
+            dense
+            clearable
+            append-inner-icon="edit"
+          />
 
-            <!-- Número do APTO -->
-            <div>
-              <div class="text-subtitle2 q-mb-xs">Número do APTO</div>
-              <q-input
-                v-model="form.numero"
-                outlined
-                dense
-                :rules="[val => !!val || 'Informe o número do apartamento']"
-              >
-                <template #append>
-                  <q-icon name="edit" />
-                </template>
-              </q-input>
-            </div>
+          <q-input
+            v-model="andar"
+            label="Andar"
+            filled
+            dense
+            clearable
+            append-inner-icon="edit"
+          />
 
-            <!-- Andar -->
-            <div>
-              <div class="text-subtitle2 q-mb-xs">Andar</div>
-              <q-input
-                v-model="form.andar"
-                outlined
-                dense
-                type="number"
-                :rules="[
-                  val => !!val || 'Informe o andar',
-                  val => Number(val) >= 0 || 'Andar não pode ser negativo'
-                ]"
-              >
-                <template #append>
-                  <q-icon name="edit" />
-                </template>
-              </q-input>
-            </div>
+          <q-input
+            v-model="bloco"
+            label="Bloco"
+            filled
+            dense
+            clearable
+            append-inner-icon="edit"
+          />
+        </div>
 
-            <!-- Bloco -->
-            <div>
-              <div class="text-subtitle2 q-mb-xs">Bloco</div>
-              <q-input
-                v-model="form.bloco"
-                outlined
-                dense
-                :rules="[val => !!val || 'Informe o bloco']"
-              >
-                <template #append>
-                  <q-icon name="edit" />
-                </template>
-              </q-input>
-            </div>
-
-          </div>
-          <!-- BOTÕES -->
-        <div class="botoes-container">
+        <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            color="green"
+            color="positive"
             text-color="black"
-            class="btn-acao"
-            type="submit"/>
-
+            class="q-mr-lg"
+            unelevated
+            @click="salvarApartamento"
+          />
           <q-btn
             label="VOLTAR AO MENU"
-            color="green"
+            color="positive"
             text-color="black"
             class="btn-acao"
             @click="voltarMenu"/>
+          
         </div>
-        
-        </q-form>
+      </div>
+
+      <!-- COLUNA DIREITA: CARD COM A TABELA -->
+      <div class="col-12 col-md-7">
+        <q-card flat bordered>
+          <q-card-section>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">Apartamentos</div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="bg-green-4">
+            <q-table              
+              :rows="apartamentoStore.lista"
+              :columns="columns"
+              row-key="id"
+              color="green" 
+              table-header-class="bg-green-2" >
+              <!-- NUMERO -->
+              <template #body-cell-numero="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input v-model="editForm.numero" dense outlined />
+                  </template>
+                  <template v-else>
+                    {{ props.row.numero }}
+                  </template>
+                </q-td>
+              </template>
+
+              <!-- ANDAR -->
+              <template #body-cell-andar="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input v-model="editForm.andar" dense outlined />
+                  </template>
+                  <template v-else>
+                    {{ props.row.andar }}
+                  </template>
+                </q-td>
+              </template>
+
+              <!-- BLOCO -->
+              <template #body-cell-bloco="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input v-model="editForm.bloco" dense outlined />
+                  </template>
+                  <template v-else>
+                    {{ props.row.bloco }}
+                  </template>
+                </q-td>
+              </template>
+
+              <!-- AÇÕES -->
+              <template #body-cell-actions="props">
+                <q-td :props="props">
+                  <!-- MODO EDIÇÃO -->
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-btn
+                      label="SALVAR"
+                      size="sm"
+                      flat
+                      color="secondary"
+                      class="q-mr-sm"
+                      @click="salvarEdicao(props.row)"
+                    />
+                    <q-btn
+                      label="CANCELAR"
+                      size="sm"
+                      flat
+                      color="negative"
+                      @click="cancelarEdicao"
+                    />
+                  </template>
+
+                  <!-- MODO NORMAL -->
+                  <template v-else>
+                    <q-btn
+                      icon="edit"
+                      size="sm"
+                      flat
+                      color="primary"
+                      class="q-mr-sm"
+                      @click="habilitarEdicao(props.row)"
+                    />
+                    <q-btn
+                      icon="delete"
+                      size="sm"
+                      flat
+                      color="negative"
+                      @click="removerApartamento(props.row)"
+                    />
+                  </template>
+                </q-td>
+              </template>
+            </q-table>
+          </q-card-section>
+        </q-card>
       </div>
     </div>
-    <q-table
-      title="Apartamentos"
-      :rows="apartamentoStore.lista"
-      :columns="columns"
-      row-key="name"
-    />
   </q-page>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-
-import { useApartamentoStore } from 'src/stores/apartamento-store'
-const apartamentoStore = useApartamentoStore()
-apartamentoStore.carregarTodos()
-
-const router = useRouter()
-const $q = useQuasar()
-
-
-const form = ref({
-  numero: '',
-  andar: '',
-  bloco: ''
-})
-const columns = [
-  { name: 'ID', required: true, label: 'id', align: 'left', field: 'id' },
-  { name: 'Numero', required: true, label: 'numero', align: 'left', field: 'numero'},
-  { name: 'Andar', required: true, label: 'andar', align: 'left', field: 'andar'},
-  { name: 'Bloco', required: true, label: 'bloco', align: 'left', field: 'bloco'}
-];
-
-const onSubmit = async () => {
-  try {
-    const payload = {
-      numero: form.value.numero,
-      andar: Number(form.value.andar),
-      bloco: form.value.bloco
-    }
-    console.log('onSubmit FOI CHAMADO', form.value)
-
-    await apartamentoStore.criar(payload)
-
-    $q.notify({
-      type: 'positive',
-      message: 'Apartamento cadastrado com sucesso!',
-      position: 'top'
-    })
-
-    form.value = { numero: '', andar: '', bloco: '' }
-  } catch {
-  $q.notify({
-    type: 'negative',
-    message: apartamentoStore.erro || 'Erro ao salvar apartamento.',
-    position: 'top'
-    })
-  }
-}
-const voltarMenu = () => {
-  router.push({ path:'/dashboard' })
-}
-</script>
-<style scoped>
-.cadastro-apto-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start00;
-}
-.botoes-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;  
-  align-items: center;       
-  gap: 24px;                
-  margin-top: 32px;
-}
-
-.btn-acao {
-  width: 250px;              
-  height: 48px;              
-  display: flex;
-  justify-content: center;   
-  align-items: center;       
-  font-weight: bold;
-}
-@media (max-width: 600px) {
-  .cadastro-apto-page {
-    align-items: stretch;
-  }
-}
-</style>
-
