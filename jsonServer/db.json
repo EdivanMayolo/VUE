@@ -57,16 +57,30 @@
       "ativo": true
     },
     {
-      "id": "c418",
-      "numero": "208",
-      "andar": "2",
-      "bloco": "A"
+      "id": "cc59",
+      "numero": "99999",
+      "andar": "9999",
+      "bloco": "CENTRO-SUL "
     }
   ],
   "morador": [
     {
-      "id": "123123",
-      "nome": "Ricardo"
+      "id": "8b26",
+      "nome": "Edivan Mayolo",
+      "cpf": "012.012.741-82",
+      "telefone": "(49) 98832-0675",
+      "email": "",
+      "inquilino": false,
+      "proprietario": true
+    },
+    {
+      "id": "3c8e",
+      "nome": "João Pedro Mayolo",
+      "cpf": "014.014.014-74",
+      "telefone": "(99) 99988-7744",
+      "email": "teste@gmail.com",
+      "inquilino": true,
+      "proprietario": false
     }
   ],
   "despesa_Fixa": [],

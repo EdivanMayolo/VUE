@@ -8,7 +8,6 @@ const $q = useQuasar()
 const router = useRouter()
 const apartamentoStore = useApartamentoStore()
 
-// ---------- FORMULÁRIO DE CADASTRO ----------
 const numero = ref('')
 const andar = ref('')
 const bloco = ref('')
@@ -38,10 +37,8 @@ async function salvarApartamento () {
 }
 
 function voltarMenu () {
-  router.push('/') // ajuste se o path do menu principal for outro
+  router.push('/dashboard') 
 }
-
-// ---------- GRID / EDIÇÃO INLINE ----------
 const editingId = ref(null)
 const editForm = ref({})
 
@@ -85,8 +82,6 @@ async function salvarEdicao (row) {
     })
   }
 }
-
-// ---------- DELETE REAL ----------
 function removerApartamento (row) {
   $q.dialog({
     title: 'Remover apartamento',
@@ -105,8 +100,6 @@ function removerApartamento (row) {
         type: 'positive',
         message: 'Apartamento removido com sucesso'
       })
-      // não precisa mexer na lista aqui:
-      // o store.remover já faz this.lista = this.lista.filter(...)
     } catch (err) {
       console.error(err)
       $q.notify({
@@ -119,43 +112,38 @@ function removerApartamento (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #a5d6a7">
+  <q-page class="q-pa-lg" style="background-color: #81C784">
     <div class="row q-col-gutter-xl">
-      <!-- COLUNA ESQUERDA: FORM "SOLTO" NO FUNDO VERDE -->
       <div class="col-12 col-md-5">
         <div class="text-h4 q-mr-sm">
-          Cadastre o APTO
+          Cadastre o Apto
         </div>
-
         <div class="q-gutter-md" style="max-width: 275px">
           <q-input
             v-model="numero"
-            label="Número do APTO"
+            label="Número do Apto *"
             filled
             dense
             clearable
             append-inner-icon="edit"
           />
-
           <q-input
             v-model="andar"
-            label="Andar"
+            label="Andar *"
             filled
             dense
             clearable
             append-inner-icon="edit"
           />
-
           <q-input
             v-model="bloco"
-            label="Bloco"
+            label="Bloco *"
             filled
             dense
             clearable
             append-inner-icon="edit"
           />
         </div>
-
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
@@ -170,17 +158,16 @@ function removerApartamento (row) {
             color="positive"
             text-color="black"
             class="btn-acao"
-            @click="voltarMenu"/>
-          
+            @click="voltarMenu"/>          
         </div>
       </div>
 
-      <!-- COLUNA DIREITA: CARD COM A TABELA -->
-      <div class="col-12 col-md-7">
-        <q-card flat bordered>
+      <div class="col-12 col-md-7">        
+        <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">Apartamentos</div>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">Apartamentos Cadastrados</div>
           </q-card-section>
+
           <q-separator />
           <q-card-section class="bg-green-4">
             <q-table              
@@ -189,7 +176,6 @@ function removerApartamento (row) {
               row-key="id"
               color="green" 
               table-header-class="bg-green-2" >
-              <!-- NUMERO -->
               <template #body-cell-numero="props">
                 <q-td :props="props">
                   <template v-if="editingId === String(props.row.id)">
@@ -200,8 +186,6 @@ function removerApartamento (row) {
                   </template>
                 </q-td>
               </template>
-
-              <!-- ANDAR -->
               <template #body-cell-andar="props">
                 <q-td :props="props">
                   <template v-if="editingId === String(props.row.id)">
@@ -213,7 +197,6 @@ function removerApartamento (row) {
                 </q-td>
               </template>
 
-              <!-- BLOCO -->
               <template #body-cell-bloco="props">
                 <q-td :props="props">
                   <template v-if="editingId === String(props.row.id)">
@@ -225,10 +208,8 @@ function removerApartamento (row) {
                 </q-td>
               </template>
 
-              <!-- AÇÕES -->
               <template #body-cell-actions="props">
                 <q-td :props="props">
-                  <!-- MODO EDIÇÃO -->
                   <template v-if="editingId === String(props.row.id)">
                     <q-btn
                       label="SALVAR"
@@ -246,8 +227,6 @@ function removerApartamento (row) {
                       @click="cancelarEdicao"
                     />
                   </template>
-
-                  <!-- MODO NORMAL -->
                   <template v-else>
                     <q-btn
                       icon="edit"
@@ -274,3 +253,15 @@ function removerApartamento (row) {
     </div>
   </q-page>
 </template>
+<style scoped>
+.card-verde {
+  background-color: #43a047 !important; /* verde dos botões */
+  border: none !important;
+}
+
+.card-verde .q-card__section {
+  background-color: #43a047 !important;
+  color: black !important;
+}
+</style>
+
