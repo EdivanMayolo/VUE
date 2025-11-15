@@ -71,7 +71,8 @@ const linksList = [
   {
     title: 'Despesa Fixa',
      to :'despesa-fixa',
-    //icon: 'person',
+    //icon: 'per
+    // son',
   },
   {
     title: 'Despesa Variavel',

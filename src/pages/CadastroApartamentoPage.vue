@@ -43,7 +43,7 @@ const editingId = ref(null)
 const editForm = ref({})
 
 const columns = [
-  { name: 'id', label: 'ID', field: 'id' },
+  //{ name: 'id', label: 'ID', field: 'id' },
   { name: 'numero', label: 'Número', field: 'numero' },
   { name: 'andar', label: 'Andar', field: 'andar' },
   { name: 'bloco', label: 'Bloco', field: 'bloco' },

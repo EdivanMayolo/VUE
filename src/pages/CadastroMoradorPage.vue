@@ -228,7 +228,7 @@ function removerMorador (row) {
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">Moradores</div>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">Moradores Cadastrados</div>
           </q-card-section>
           <q-separator />
           <q-card-section class="bg-green-4">

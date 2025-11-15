@@ -83,8 +83,19 @@
       "proprietario": false
     }
   ],
-  "despesa_Fixa": [],
-  "despesa_Variavel": [],
+  "despesa_fixa": [
+    {
+      "id": "0af9",
+      "descricao": "Internet",
+      "valor": 100
+    },
+    {
+      "id": "327a",
+      "descricao": "Síndico",
+      "valor": 1200
+    }
+  ],
+  "despesa_variavel": [],
   "fatura": [],
   "pedidos": []
 }
