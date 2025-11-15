@@ -1,152 +1,327 @@
 <template>
-  <q-page class="bg-green-3 text-black cadastro-despesa-page">
-    <div class="row justify-center">
-      <div class="col-12 col-md-8 col-lg-6">
-
-        <!-- TÍTULO -->
-        <div class="text-h4 q-mt-xl q-mb-lg text-center text-weight-light">
+  <q-page class="q-pa-lg" style="background-color: #81C784">
+    <div class="row q-col-gutter-md">
+      <!-- COLUNA ESQUERDA: FORM -->
+      <div class="col-12 col-md-4">
+        <div class="text-h4 q-mr-sm q-mb-md">
           Cadastro de Despesa Variável
         </div>
 
-        <!-- FORMULÁRIO -->
-        <q-form @submit.prevent="onSubmit">
-          <div class="q-gutter-md">
+        <div class="q-gutter-md" style="max-width: 323px">
+          <!-- DESCRIÇÃO -->
+          <q-input
+            v-model="descricao"
+            label="Descrição da Despesa *"
+            filled
+            dense
+            clearable
+            append-inner-icon="edit"
+          />
 
-            <!-- DESCRIÇÃO -->
-            <div>
-              <div class="text-subtitle2 q-mb-xs">Descrição da Despesa</div>
-              <q-input
-                v-model="form.descricao"
-                outlined
-                dense
-                :rules="[val => !!val || 'Informe a descrição da despesa']"
-              >
-                <template #append>
-                  <q-icon name="edit" />
-                </template>
-              </q-input>
-            </div>
+          <!-- VALOR -->
+          <q-input
+            v-model="valor"
+            label="Valor *"
+            filled
+            dense
+            clearable
+            prefix="R$"
+            append-inner-icon="payments"
+          />
+        </div>
 
-            <!-- VALOR -->
-            <div>
-              <div class="text-subtitle2 q-mb-xs">Valor</div>
-              <q-input
-                v-model="form.valor"
-                outlined
-                dense
-                prefix="R$"
-                :rules="[
-                  val => !!val || 'Informe o valor',
-                  val => isValorValido(val) || 'Informe um valor numérico válido'
-                ]"
-              >
-                <template #append>
-                  <q-icon name="edit" />
-                </template>
-              </q-input>
-            </div>
+        <div class="q-mt-xl">
+          <q-btn
+            label="SALVAR"
+            color="positive"
+            text-color="black"
+            class="q-mr-lg"
+            unelevated
+            @click="salvarDespesa"
+          />
+          <q-btn
+            label="VOLTAR AO MENU"
+            color="positive"
+            text-color="black"
+            class="q-mr-lg"            
+            @click="voltarMenu"
+          />
+        </div>
+      </div>
 
-          </div>
+      <!-- COLUNA DIREITA: GRID -->
+      <div class="col-12 col-md-8">
+        <q-card flat class="card-verde">
+          <q-card-section>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">Despesas Vairavies Cadastradas</div>
+          </q-card-section>
 
-          <!-- BOTÕES -->
-          <div class="botoes-container">
-            <q-btn
-              label="SALVAR"
+          <q-separator />
+
+          <q-card-section class="bg-green-4">
+            <q-table
+              :rows="despesaVariavelStore.lista"
+              :columns="columns"
+              row-key="id"
               color="green"
-              text-color="black"
-              class="btn-acao"
-              type="submit"
-            />
+              table-header-class="bg-green-2"
+              class="full-width"
+            >
+              <!-- DESCRIÇÃO -->
+              <template #body-cell-descricao="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input v-model="editForm.descricao" dense outlined />
+                  </template>
+                  <template v-else>
+                    {{ props.row.descricao }}
+                  </template>
+                </q-td>
+              </template>
 
-            <q-btn
-              label="VOLTAR AO MENU"
-              color="green"
-              text-color="black"
-              class="btn-acao"
-              @click="voltarMenu"
-            />
-          </div>
-        </q-form>
+              <!-- VALOR -->
+              <template #body-cell-valor="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input
+                      v-model="editForm.valor"
+                      dense
+                      outlined
+                      prefix="R$"
+                    />
+                  </template>
+                  <template v-else>
+                    R$ {{ Number(props.row.valor).toFixed(2) }}
+                  </template>
+                </q-td>
+              </template>
+
+              <!-- AÇÕES -->
+              <template #body-cell-actions="props">
+                <q-td :props="props">
+                  <!-- MODO EDIÇÃO -->
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-btn
+                      label="SALVAR"
+                      size="sm"
+                      flat
+                      color="secondary"
+                      class="q-mr-sm"
+                      @click="salvarEdicao(props.row)"
+                    />
+                    <q-btn
+                      label="CANCELAR"
+                      size="sm"
+                      flat
+                      color="negative"
+                      @click="cancelarEdicao"
+                    />
+                  </template>
+
+                  <!-- MODO NORMAL -->
+                  <template v-else>
+                    <q-btn
+                      icon="edit"
+                      size="sm"
+                      flat
+                      color="primary"
+                      class="q-mr-sm"
+                      @click="habilitarEdicao(props.row)"
+                    />
+                    <q-btn
+                      icon="delete"
+                      size="sm"
+                      flat
+                      color="negative"
+                      @click="removerDespesa(props.row)"
+                    />
+                  </template>
+                </q-td>
+              </template>
+            </q-table>
+          </q-card-section>
+        </q-card>
       </div>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import { useDespesaVariavelStore } from 'src/stores/despesa_variavel-store'
 
 const router = useRouter()
 const $q = useQuasar()
+const despesaVariavelStore = useDespesaVariavelStore()
 
-const form = ref({
-  descricao: '',
-  valor: '' // ex.: "150,00"
-})
+// FORMULÁRIO
+const descricao = ref('')
+const valor = ref('')
 
-const isValorValido = (val) => {
-  if (!val) return false
-  const normalizado = String(val).replace('.', '').replace(',', '.')
-  return !isNaN(normalizado) && Number(normalizado) >= 0
+function resetForm () {
+  descricao.value = ''
+  valor.value = ''
 }
 
-const onSubmit = () => {
-  const normalizado = String(form.value.valor).replace('.', '').replace(',', '.')
-  const payload = {
-    descricao: form.value.descricao,
-    valor: Number(normalizado)
+function normalizarValor (val) {
+  if (!val && val !== 0) return null
+  const normalizado = String(val).replace(/\./g, '').replace(',', '.')
+  const numero = Number(normalizado)
+  return isNaN(numero) ? null : numero
+}
+
+function validarFormDespesa (dados) {
+  if (!dados.descricao) {
+    $q.notify({
+      type: 'negative',
+      message: 'Descrição é obrigatória'
+    })
+    return false
   }
 
-  console.log('Despesa variável (mock, sem API ainda):', payload)
+  if (dados.valor === null || isNaN(dados.valor)) {
+    $q.notify({
+      type: 'negative',
+      message: 'Informe um valor numérico válido'
+    })
+    return false
+  }
 
-  $q.notify({
-    type: 'positive',
-    message: 'Despesa variável cadastrada (mock, sem API).',
-    position: 'top'
-  })
-
-  // Se quiser limpar:
-  // form.value = { descricao: '', valor: '' }
+  return true
 }
 
-const voltarMenu = () => {
-  router.push({ path:'/dashboard' })
+async function salvarDespesa () {
+  const payload = {
+    descricao: descricao.value,
+    valor: normalizarValor(valor.value)
+  }
+
+  if (!validarFormDespesa(payload)) {
+    return
+  }
+
+  try {
+    await despesaVariavelStore.criar(payload)
+    $q.notify({
+      type: 'positive',
+      message: 'Despesa variável cadastrada com sucesso'
+    })
+    resetForm()
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      type: 'negative',
+      message: err?.response?.data?.message || 'Erro ao cadastrar despesa variável'
+    })
+  }
+}
+
+function voltarMenu () {
+  router.push('/dashboard')
+}
+
+// GRID / EDIÇÃO INLINE
+const editingId = ref(null)
+const editForm = ref({})
+
+const columns = [
+  { name: 'descricao', label: 'Descrição', field: 'descricao' },
+  { name: 'valor', label: 'Valor', field: 'valor' },
+  { name: 'actions', label: 'Ações', field: 'actions', sortable: false }
+]
+
+onMounted(() => {
+  despesaVariavelStore.carregarTodos()
+})
+
+function habilitarEdicao (row) {
+  editingId.value = String(row.id)
+  editForm.value = {
+    id: row.id,
+    descricao: row.descricao,
+    valor: row.valor
+  }
+}
+
+function cancelarEdicao () {
+  editingId.value = null
+  editForm.value = {}
+}
+
+async function salvarEdicao (row) {
+  const payload = {
+    ...editForm.value,
+    valor: normalizarValor(editForm.value.valor)
+  }
+
+  if (!validarFormDespesa(payload)) {
+    return
+  }
+
+  try {
+    await despesaVariavelStore.atualizar(row.id, payload)
+    $q.notify({
+      type: 'positive',
+      message: 'Despesa variável atualizada com sucesso'
+    })
+    cancelarEdicao()
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      type: 'negative',
+      message: err?.response?.data?.message || 'Erro ao atualizar despesa variável'
+    })
+  }
+}
+
+function removerDespesa (row) {
+  $q.dialog({
+    title: 'Remover despesa variável',
+    message: `Deseja realmente remover a despesa "${row.descricao}"?`,
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: 'Sim, remover',
+      color: 'negative'
+    },
+    cancelLabel: 'Cancelar'
+  }).onOk(async () => {
+    try {
+      await despesaVariavelStore.remover(row.id)
+      $q.notify({
+        type: 'positive',
+        message: 'Despesa variável removida com sucesso'
+      })
+    } catch (err) {
+      console.error(err)
+      $q.notify({
+        type: 'negative',
+        message: err?.response?.data?.message || 'Erro ao remover despesa variável'
+      })
+    }
+  })
 }
 </script>
 
 <style scoped>
-.cadastro-despesa-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
+.card-verde {
+  background-color: #43a047 !important; /* Verde igual aos botões */
+  border: none !important;
 }
 
-.botoes-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-top: 32px;
+.card-verde .q-card__section {
+  background-color: #43a047 !important;
+  color: black !important;
 }
 
 .btn-acao {
   width: 250px;
   height: 48px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-}
-
-@media (max-width: 600px) {
-  .cadastro-despesa-page {
-    align-items: stretch;
-  }
-
-  .botoes-container {
-    flex-direction: column;
-  }
 }
 </style>

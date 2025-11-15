@@ -49,11 +49,11 @@
         </div>
       </div>
 
-      <!-- GRID -->
+      <!--GRID -->
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">Moradores Cadastrados</div>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">Despesas Cadastradas</div>
           </q-card-section>
           <q-separator />
 

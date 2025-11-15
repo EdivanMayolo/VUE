@@ -95,7 +95,18 @@
       "valor": 1200
     }
   ],
-  "despesa_variavel": [],
+  "despesa_variavel": [
+    {
+      "id": "60b7",
+      "descricao": "Água",
+      "valor": 1500
+    },
+    {
+      "id": "cd2f",
+      "descricao": "Energia Elétrica",
+      "valor": 128
+    }
+  ],
   "fatura": [],
   "pedidos": []
 }

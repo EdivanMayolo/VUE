@@ -5,7 +5,7 @@
 
   "Despesa_Fixa": ["id","descricao","valor"],
 
-  "Despesa_Variavel": ["id","descricao","valor","data"],
+  "Despesa_Variavel": ["id","descricao","valor"],
 
   "Fatura":["id","numeroApto","mes", "ano","valorFixo","valorVariavel","valorTotal","dataVencimento"]
 
