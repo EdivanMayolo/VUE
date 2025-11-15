@@ -122,6 +122,12 @@
         </q-form>
       </div>
     </div>
+    <q-table
+      title="Morador"
+      :rows="moradorStore.lista"
+      :columns="columns"
+      row-key="name"
+    />
   </q-page>
 </template>
 
@@ -129,6 +135,16 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+
+import { useMoradorStore } from 'src/stores/morador-store'
+const moradorStore = useMoradorStore()
+moradorStore.carregarTodos()
+
+
+const columns = [
+  { name: 'ID', required: true, label: 'id', align: 'left', field: 'id' },
+  { name: 'Nome', required: true, label: 'nome', align: 'left', field: 'nome'}
+];
 
 const router = useRouter()
 const $q = useQuasar()

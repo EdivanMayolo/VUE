@@ -76,12 +76,18 @@
             color="green"
             text-color="black"
             class="btn-acao"
-          @click="voltarMenu"/>
+            @click="voltarMenu"/>
         </div>
         
         </q-form>
       </div>
     </div>
+    <q-table
+      title="Apartamentos"
+      :rows="apartamentoStore.lista"
+      :columns="columns"
+      row-key="name"
+    />
   </q-page>
 </template>
 
@@ -89,17 +95,26 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+
 import { useApartamentoStore } from 'src/stores/apartamento-store'
+const apartamentoStore = useApartamentoStore()
+apartamentoStore.carregarTodos()
 
 const router = useRouter()
 const $q = useQuasar()
-const apartamentoStore = useApartamentoStore()
+
 
 const form = ref({
   numero: '',
   andar: '',
   bloco: ''
 })
+const columns = [
+  { name: 'ID', required: true, label: 'id', align: 'left', field: 'id' },
+  { name: 'Numero', required: true, label: 'numero', align: 'left', field: 'numero'},
+  { name: 'Andar', required: true, label: 'andar', align: 'left', field: 'andar'},
+  { name: 'Bloco', required: true, label: 'bloco', align: 'left', field: 'bloco'}
+];
 
 const onSubmit = async () => {
   try {
