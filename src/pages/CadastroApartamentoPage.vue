@@ -147,7 +147,7 @@ function removerApartamento (row) {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #43A047"
+            style="background-color: #66BB6A"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -155,7 +155,7 @@ function removerApartamento (row) {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #43A047"
+            style="background-color: #66BB6A"
             text-color="black"
             class="btn-acao"
             @click="voltarMenu"/>          
@@ -255,12 +255,12 @@ function removerApartamento (row) {
 </template>
 <style scoped>
 .card-verde {
-  background-color: #43a047 !important; /* verde dos botões */
+  background-color: #66BB6A !important; /* verde dos botões */
   border: none !important;
 }
 
 .card-verde .q-card__section {
-  background-color: #43a047 !important;
+  background-color: #66BB6A !important;
   color: black !important;
 }
 </style>

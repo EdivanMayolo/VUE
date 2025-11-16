@@ -268,7 +268,7 @@ function abrirFaturas () {
           <q-select
             v-model="numeroApto"
             :options="aptoOptions"
-            label="Número do APTO *"
+            label="Número do Apto *"
             filled
             dense
             emit-value
@@ -373,7 +373,7 @@ function abrirFaturas () {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #43A047"
+            style="background-color: #66BB6A"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -381,7 +381,7 @@ function abrirFaturas () {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #43A047"
+            style="background-color: #66BB6A"
             text-color="black"
             class="q-mr-lg"
             @click="voltarMenu"
@@ -391,7 +391,7 @@ function abrirFaturas () {
         <div class="botao-faturas-container">
           <q-btn
             label="FATURAS"
-            style="background-color: #43A047"
+            style="background-color: #66BB6A"
             text-color="black"
             class="btn-acao"
             @click="abrirFaturas"
@@ -497,11 +497,11 @@ function abrirFaturas () {
   font-weight: bold;
 }
 .card-verde {
-  background-color: #43a047 !important;
+  background-color: #66BB6A !important;
   border: none !important;
 }
 .card-verde .q-card__section {
-  background-color: #43a047 !important;
+  background-color: #66BB6A !important;
   color: black !important;
 }
 .botao-faturas-container {

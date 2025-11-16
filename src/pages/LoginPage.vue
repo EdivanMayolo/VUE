@@ -42,7 +42,7 @@
 
             <q-btn
               class="q-mt-md full-width"
-              style="background-color: #43A047"
+              style="background-color: #66BB6A"
               :label="$t('login.submit')"
               type="submit"
             />

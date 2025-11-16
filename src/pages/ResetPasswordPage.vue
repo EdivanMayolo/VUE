@@ -21,7 +21,7 @@
 
               <q-btn
                 class="q-mt-md full-width"
-                color="green"
+                style="background-color: #66BB6A"
                 :label="$t('reset.submit')"
                 type="submit"
               />

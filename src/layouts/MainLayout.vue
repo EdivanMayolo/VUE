@@ -1,20 +1,58 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar style="background-color: #43A047">
-        <q-btn flat dense round icon="menu" aria-label="Menu"/>
+    <q-header elevated style="background-color: #66BB6A">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="leftDrawerOpen = !leftDrawerOpen"
+        />
 
-        <q-toolbar-title>  </q-toolbar-title>
-
-        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <q-toolbar-title>
+          <!-- Se quiser, coloca o nome do sistema aqui -->
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <!-- <q-item-label header> Essential Links </q-item-label> -->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      side="left"
+      bordered
+      style="background-color: #66BB6A"
+    >
+      <q-list padding>
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+        <!-- LINKS PRINCIPAIS -->
+        <EssentialLink
+          v-for="link in mainLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+
+        <!-- SEÇÃO CADASTROS -->
+        <q-separator spaced />
+
+        <q-item-label
+          header
+          class="text-uppercase text-black q-pa-md font-bold"
+        >
+          Cadastros
+        </q-item-label>
+
+        <EssentialLink
+          v-for="link in cadastroLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+
+        <!-- LOGOUT SEPARADO -->
+        <q-separator spaced />
+        <EssentialLink v-bind="logoutLink" />
+
       </q-list>
     </q-drawer>
 
@@ -28,59 +66,25 @@
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
-    title: 'Home',
-    to: '/',
-    icon: 'house',
-  },
-  {
-    title: 'Aptos Vagos',
-    icon: 'code',
-  },
-  {
-    title: 'Agua',
-    icon: 'water',    
-  },
-  {
-    title: 'Caixa',
-    icon: '       ',
-  },
-  {
-    title: 'Boletos',
-    icon: 'money',    
-  },
-  {
-    title: 'CADASTROS',
-    icon: 'person',
-  },
-  {
-    title: 'Apartamento',
-     to :'apartamento',
-  },
-  {
-    title: 'Morador',
-     to :'morador',
-        icon:'people',
-  },
-  {
-    title: 'Despesa Fixa',
-     to :'despesa-fixa',
-  },
-  {
-    title: 'Despesa Variavel',
-     to :'despesa-variavel',
-  },
-  {
-    title: 'Fatura',
-     to :'fatura',
-  },
-  {
-    title: 'Logout',
-    to: '/', //conforme tiver que direcionar a pagina
-    icon: 'back',
-  },
+const leftDrawerOpen = ref(false)
+
+const mainLinks = [
+  { title: 'Home',        to: '/',            icon: 'home' },
+  { title: 'Aptos Vagos', to: '/aptos-vagos', icon: 'holiday_village' },
+  { title: 'Agua',        to: '/agua',        icon: 'water_drop' },
+  { title: 'Caixa',       to: '/caixa',       icon: 'account_balance_wallet' },
+  { title: 'Boletos',     to: '/boletos',     icon: 'receipt_long' }
 ]
 
-const leftDrawerOpen = ref(false)
+const cadastroLinks = [
+  { title: 'Apartamento',      to: '/apartamento',      icon: 'apartment' },
+  { title: 'Morador',          to: '/morador',          icon: 'people' },
+  { title: 'Despesa Fixa',     to: '/despesa-fixa',     icon: 'payments' },
+  { title: 'Despesa Variavel', to: '/despesa-variavel', icon: 'trending_up' },
+  { title: 'Fatura',           to: '/fatura',           icon: 'request_quote' }
+]
+
+const logoutLink = {
+  title: 'Logout',  to: '/',  icon: 'logout'
+}
 </script>
