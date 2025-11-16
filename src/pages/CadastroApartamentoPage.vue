@@ -112,7 +112,7 @@ function removerApartamento (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
+  <q-page class="q-pa-lg" style="background-color: #ace2ae">
     <div class="row q-col-gutter-xl">
       <div class="col-12 col-md-5">
         <div class="text-h4 q-mr-sm">
@@ -174,7 +174,7 @@ function removerApartamento (row) {
               :rows="apartamentoStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #E8F5E9" 
+              style="background-color: #d9f8db" 
               table-header-class="bg-green-2" >
               <template #body-cell-numero="props">
                 <q-td :props="props">

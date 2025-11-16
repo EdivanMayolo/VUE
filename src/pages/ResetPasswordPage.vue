@@ -1,32 +1,45 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center bg-green-3 text-black" style="min-height: 100vh">
-        <div class="col-12 col-md-6"></div>
-
-        <div class="col-12 col-md-6 flex flex-center">
-          <div class="q-pa-md" style="width: 380px; max-width: 90vw">
-            <div class="text-h5 q-mb-md">{{ $t('reset.title') }}</div>
-
-            <q-form @submit.prevent="onSubmit">
-              <q-input
-                v-model="pwd"
-                :label="$t('reset.new')"
-                type="password"
-                outlined
-                dense
-                class="q-mb-sm"
-              />
-              <q-input v-model="pwd2" :label="$t('reset.confirm')" type="password" outlined dense />
-
-              <q-btn
-                class="q-mt-md full-width"
-                style="background-color: #66BB6A"
-                :label="$t('reset.submit')"
-                type="submit"
-              />
-            </q-form>
+      <q-page class="flex flex-center " style="background-color: #A5D6A7">
+        <div class="reset-box">
+          <div class="text-h5 q-mb-md text-center text-weight-bold">
+            REDEFINIR SENHA
           </div>
+
+          <q-form @submit.prevent="onSubmit">
+            <q-input
+              v-model="novaSenha"
+              label="Nova Senha"
+              type="password"
+              outlined
+              dense
+              class="q-mb-sm"
+              lazy-rules
+              :rules="[(val) => !!val || 'Informe a nova senha']"
+            />
+
+            <q-input
+              v-model="confirmaSenha"
+              label="Confirme sua Senha"
+              type="password"
+              outlined
+              dense
+              lazy-rules
+              :rules="[
+                (val) => !!val || 'Confirme a senha',
+                (val) => val === novaSenha || 'As senhas não conferem'
+              ]"
+            />
+
+            <q-btn
+              class="q-mt-md full-width"
+              color="positive"
+              text-color="black"
+              label="ENVIAR"
+              type="submit"
+            />
+          </q-form>
         </div>
       </q-page>
     </q-page-container>
@@ -35,22 +48,47 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 
+const $q = useQuasar()
 const router = useRouter()
 
-const pwd = ref('')
-const pwd2 = ref('')
+const novaSenha = ref('')
+const confirmaSenha = ref('')
 
 const onSubmit = () => {
-  console.log('onSubmit foi chamado', pwd.value, pwd2.value)
-
-  if (pwd.value !== pwd2.value) {
-    alert('As senhas não são iguais!')
+  if (novaSenha.value !== confirmaSenha.value) {
+    $q.notify({
+      type: 'negative',
+      message: 'As senhas não conferem'
+    })
     return
   }
 
-  alert('Senha redefinida com sucesso!')
-  router.push('/')
+  // aqui depois você chama a API de redefinição de senha
+
+  $q.notify({
+    type: 'positive',
+    message: 'Senha redefinida com sucesso'
+  })
+
+  router.push('/') // ajusta o caminho que você usa pro login
 }
 </script>
+
+<style scoped>
+.reset-box {
+  width: 420px;
+  max-width: 90vw;
+
+  background: #a5d6a7;        /* verde claro, igual login */
+  padding: 32px;
+  border-radius: 16px;
+  border: 2px solid #66bb6a;  /* borda verde */
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+
+  display: flex;
+  flex-direction: column;
+}
+</style>

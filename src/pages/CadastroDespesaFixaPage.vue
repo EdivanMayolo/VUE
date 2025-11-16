@@ -62,7 +62,7 @@
               :rows="despesaFixaStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #E8F5E9"
+              style="background-color: #d9f8db"
               table-header-class="bg-green-2"
               class="full-width"
             >

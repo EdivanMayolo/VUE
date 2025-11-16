@@ -50,17 +50,9 @@
 
         </q-page>
 </template>
-
-<script setup>
-</script>
-
 <style scoped>
-.bg-dark {
-  background: #212121;
-}
-
 .card-dark {
-  background: #333;
+  background: #878c96;
   border-radius: 16px;
 }
 
@@ -69,14 +61,14 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  border: 40px solid #66e0a3;
-  border-top-color: #ff9ca2;
+  border: 40px solid #17c46e;
+  border-top-color: #f74c58;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 26px;
   font-weight: bold;
-  color: #66e0a3;
+  color: #073b21;
 }
 
 /* Pizza fake */
@@ -87,18 +79,17 @@
   background: conic-gradient(
     #4c6fff 0 150deg,
     #36d1c4 150deg 240deg,
-    #ffd54f 240deg 300deg,
-    #ff8a80 300deg 360deg
+    #f1bf1a 240deg 300deg,
+    hsl(5, 86%, 57%) 300deg 360deg
   );
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Barras horizontais fake */
 .bar-placeholder {
   width: 100%;
-  height: 120px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff33, #ffffff11);
+  height: 150px;
+  border-radius: 50px;
+  background: linear-gradient(180deg, #2f993d33, #0fa016c4);
 }
 
 /* Barras verticais fake */
