@@ -55,17 +55,22 @@
       "id": "cd2f",
       "descricao": "Energia Elétrica",
       "valor": 100
+    },
+    {
+      "id": "744d",
+      "descricao": "Gás",
+      "valor": 100
     }
   ],
   "fatura": [
     {
-      "id": "471d",
+      "id": "1b37",
       "numeroApto": "101",
       "mes": "11",
       "ano": "2025",
       "valorFixo": 100,
-      "valorVariavel": 100,
-      "valorTotal": 200,
+      "valorVariavel": 150,
+      "valorTotal": 250,
       "dataVencimento": "10/11/2025"
     }
   ],

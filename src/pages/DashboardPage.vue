@@ -1,7 +1,6 @@
 <template>
   <q-page class="q-pa-lg" style="background-color: #A5D6A7">
     <div class="row q-col-gutter-lg">
-
       <!-- Coluna esquerda (gráficos grandes) -->
       <div class="col-12 col-md-8">
         <!-- Apartamentos Vagos -->
@@ -40,7 +39,16 @@
         </q-card>
       </div>
     </div>
-  </q-page>
+      <div class="row justify-end" style="margin-top: -60px;">
+        <q-circular-progress
+          indeterminate
+          rounded
+          size="60px"
+          color="red"
+          />
+        </div>
+
+        </q-page>
 </template>
 
 <script setup>
