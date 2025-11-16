@@ -34,7 +34,7 @@
             <div class="q-mt-xs text-right">
               <!-- <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" /> -->
                <!-- <q-btn flat color="secondary" :label="$t('login.forgot')" type="button" @click="$router.push('/redefinir-senha')" /> -->
-               <q-btn flat color="secondary" :label="$t('login.forgot')" @click="$router.push('/redefinir-senha')" />
+               <q-btn flat color="green-9" :label="$t('login.forgot')" @click="$router.push('/redefinir-senha')" />
 
 
 
@@ -42,7 +42,7 @@
 
             <q-btn
               class="q-mt-md full-width"
-              color="green"
+              style="background-color: #43A047"
               :label="$t('login.submit')"
               type="submit"
             />

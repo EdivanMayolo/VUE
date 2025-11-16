@@ -112,7 +112,7 @@ function removerApartamento (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #81C784">
+  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
     <div class="row q-col-gutter-xl">
       <div class="col-12 col-md-5">
         <div class="text-h4 q-mr-sm">
@@ -147,7 +147,7 @@ function removerApartamento (row) {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            color="positive"
+            style="background-color: #43A047"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -155,7 +155,7 @@ function removerApartamento (row) {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            color="positive"
+            style="background-color: #43A047"
             text-color="black"
             class="btn-acao"
             @click="voltarMenu"/>          
@@ -174,7 +174,7 @@ function removerApartamento (row) {
               :rows="apartamentoStore.lista"
               :columns="columns"
               row-key="id"
-              color="green" 
+              style="background-color: #E8F5E9" 
               table-header-class="bg-green-2" >
               <template #body-cell-numero="props">
                 <q-td :props="props">

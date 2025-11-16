@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg" style="background-color: #81C784">
+  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
     <div class="row q-col-gutter-md">
       <!-- COLUNA ESQUERDA: FORM -->
       <div class="col-12 col-md-4">
@@ -33,7 +33,7 @@
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            color="positive"
+            style="background-color: #43A047"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -41,7 +41,7 @@
           />
           <q-btn
             label="VOLTAR AO MENU"
-            color="positive"
+            style="background-color: #43A047"
             text-color="black"
             class="q-mr-lg"            
             @click="voltarMenu"
@@ -63,7 +63,7 @@
               :rows="despesaVariavelStore.lista"
               :columns="columns"
               row-key="id"
-              color="green"
+              style="background-color: #E8F5E9"
               table-header-class="bg-green-2"
               class="full-width"
             >

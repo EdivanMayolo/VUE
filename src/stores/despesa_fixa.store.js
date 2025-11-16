@@ -1,4 +1,4 @@
-// src/stores/despesa-fixa-store.js
+// src/stores/despesa-fixa.store.js
 import { defineStore } from 'pinia'
 import { DespesaFixaService } from 'src/services/despesa_fixa'
 

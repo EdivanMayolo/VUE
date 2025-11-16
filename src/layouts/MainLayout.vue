@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar style="background-color: green">
+      <q-toolbar style="background-color: #43A047">
         <q-btn flat dense round icon="menu" aria-label="Menu"/>
 
         <q-toolbar-title>  </q-toolbar-title>
@@ -36,17 +36,14 @@ const linksList = [
   },
   {
     title: 'Aptos Vagos',
-    // to :''
     icon: 'code',
   },
   {
     title: 'Agua',
-    //to: 'agua',
     icon: 'water',    
   },
   {
     title: 'Caixa',
-    // to :'',
     icon: '       ',
   },
   {
@@ -55,34 +52,28 @@ const linksList = [
   },
   {
     title: 'CADASTROS',
-     //to :'cadastros',
     icon: 'person',
   },
   {
     title: 'Apartamento',
      to :'apartamento',
-    //icon: 'person',
   },
   {
     title: 'Morador',
      to :'morador',
-    //icon: 'person',
+        icon:'people',
   },
   {
     title: 'Despesa Fixa',
      to :'despesa-fixa',
-    //icon: 'per
-    // son',
   },
   {
     title: 'Despesa Variavel',
      to :'despesa-variavel',
-    //icon: 'person',
   },
   {
     title: 'Fatura',
      to :'fatura',
-    //icon: 'person',
   },
   {
     title: 'Logout',
@@ -92,8 +83,4 @@ const linksList = [
 ]
 
 const leftDrawerOpen = ref(false)
-
-// function toggleLeftDrawer() {
-//   leftDrawerOpen.value = !leftDrawerOpen.value
-// }
 </script>

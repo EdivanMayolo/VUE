@@ -25,10 +25,6 @@
                 :label="$t('reset.submit')"
                 type="submit"
               />
-
-              <!-- <div class="q-mt-sm text-center">
-            <q-btn flat color="secondary" :label="$t('reset.backToLogin')" @click="goLogin" />
-          </div> -->
             </q-form>
           </div>
         </div>
