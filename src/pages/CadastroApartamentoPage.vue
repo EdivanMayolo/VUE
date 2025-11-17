@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useApartamentoStore } from 'src/stores/apartamento-store'
 
+
 const $q = useQuasar()
 const router = useRouter()
 const apartamentoStore = useApartamentoStore()

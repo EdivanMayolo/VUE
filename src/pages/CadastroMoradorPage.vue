@@ -1,18 +1,29 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useMoradorStore } from 'src/stores/morador-store'
+import { useApartamentoStore } from 'src/stores/apartamento-store'
 
 const $q = useQuasar()
 const router = useRouter()
+
 const moradorStore = useMoradorStore()
+const apartamentoStore = useApartamentoStore()
+
+// FORM
 const nome = ref('')
 const cpf = ref('')
 const telefone = ref('')
 const email = ref('')
 const inquilino = ref(false)
 const proprietario = ref(false)
+const numeroApartamento = ref('')
+
+// lista de números de apartamento para validação
+const numerosApartamentos = computed(() =>
+  apartamentoStore.lista.map(a => String(a.numero)) // ajuste "numero" se o campo no db for outro
+)
 
 function resetForm () {
   nome.value = ''
@@ -21,7 +32,9 @@ function resetForm () {
   email.value = ''
   inquilino.value = false
   proprietario.value = false
+  numeroApartamento.value = ''
 }
+
 function validarFormMorador (dados) {
   if (!dados.nome || !dados.cpf || !dados.telefone) {
     $q.notify({
@@ -30,6 +43,25 @@ function validarFormMorador (dados) {
     })
     return false
   }
+
+  if (!dados.numeroApartamento) {
+    $q.notify({
+      type: 'negative',
+      message: 'Informe o número do apartamento'
+    })
+    return false
+  }
+
+  const existeApto = numerosApartamentos.value.includes(String(dados.numeroApartamento))
+
+  if (!existeApto) {
+    $q.notify({
+      type: 'negative',
+      message: 'Apartamento inexistente. Cadastre o APTO antes de vincular o morador.'
+    })
+    return false
+  }
+
   if (!dados.inquilino && !dados.proprietario) {
     $q.notify({
       type: 'negative',
@@ -37,8 +69,10 @@ function validarFormMorador (dados) {
     })
     return false
   }
+
   return true
 }
+
 async function salvarMorador () {
   const payload = {
     nome: nome.value,
@@ -46,11 +80,14 @@ async function salvarMorador () {
     telefone: telefone.value,
     email: email.value,
     inquilino: inquilino.value,
-    proprietario: proprietario.value
+    proprietario: proprietario.value,
+    numeroApartamento: numeroApartamento.value
   }
+
   if (!validarFormMorador(payload)) {
     return
   }
+
   try {
     await moradorStore.criar(payload)
     $q.notify({ type: 'positive', message: 'Morador cadastrado com sucesso' })
@@ -63,25 +100,30 @@ async function salvarMorador () {
     })
   }
 }
+
 function voltarMenu () {
   router.push('/dashboard')
 }
+
+// EDIÇÃO / GRID
 const editingId = ref(null)
 const editForm = ref({})
 
 const columns = [
-  //{ name: 'id', label: 'ID', field: 'id' },
   { name: 'nome', label: 'Nome', field: 'nome' },
   { name: 'cpf', label: 'CPF', field: 'cpf' },
   { name: 'telefone', label: 'Telefone', field: 'telefone' },
   { name: 'email', label: 'E-mail', field: 'email' },
+  { name: 'numeroApartamento', label: 'APTO', field: 'numeroApartamento' },
   { name: 'tipo', label: 'Tipo', field: 'tipo' },
   { name: 'actions', label: 'Ações', field: 'actions', sortable: false }
 ]
 
 onMounted(() => {
   moradorStore.carregarTodos()
+  apartamentoStore.carregarTodos() // aqui tu tinha esquecido os parênteses
 })
+
 function habilitarEdicao (row) {
   editingId.value = String(row.id)
   editForm.value = {
@@ -91,19 +133,23 @@ function habilitarEdicao (row) {
     telefone: row.telefone,
     email: row.email ?? '',
     inquilino: row.inquilino ?? false,
-    proprietario: row.proprietario ?? false
+    proprietario: row.proprietario ?? false,
+    numeroApartamento: row.numeroApartamento ?? ''
   }
 }
+
 function cancelarEdicao () {
   editingId.value = null
   editForm.value = {}
 }
+
 async function salvarEdicao (row) {
   const payload = { ...editForm.value }
 
   if (!validarFormMorador(payload)) {
     return
   }
+
   try {
     await moradorStore.atualizar(row.id, payload)
     $q.notify({ type: 'positive', message: 'Morador atualizado com sucesso' })
@@ -116,6 +162,7 @@ async function salvarEdicao (row) {
     })
   }
 }
+
 function removerMorador (row) {
   $q.dialog({
     title: 'Remover morador',
@@ -148,6 +195,7 @@ function removerMorador (row) {
 <template>
   <q-page class="q-pa-lg" style="background-color: #A5D6A7">
     <div class="row q-col-gutter-md">
+      <!-- FORM ESQUERDO -->
       <div class="col-12 col-md-4">
         <div class="text-h4 q-mr-sm">
           Cadastre o Morador
@@ -162,6 +210,7 @@ function removerMorador (row) {
             clearable
             append-inner-icon="person"
           />
+
           <q-input
             v-model="cpf"
             label="CPF *"
@@ -171,6 +220,7 @@ function removerMorador (row) {
             mask="###.###.###-##"
             append-inner-icon="badge"
           />
+
           <q-input
             v-model="telefone"
             label="Telefone *"
@@ -180,6 +230,17 @@ function removerMorador (row) {
             mask="(##) #####-####"
             append-inner-icon="phone"
           />
+
+          <!-- NÚMERO DO APTO -->
+          <q-input
+            v-model="numeroApartamento"
+            label="Número do APTO *"
+            filled
+            dense
+            clearable
+            append-inner-icon="home"
+          />
+
           <q-input
             v-model="email"
             label="E-mail"
@@ -191,16 +252,15 @@ function removerMorador (row) {
           />
 
           <div class="row q-gutter-sm q-mt-sm">
-            <div class="text-subtitle2"></div>
             <q-checkbox
               v-model="inquilino"
               label="Inquilino"
-              @update:model-value="val => { if (val) proprietario = false }"
+              @update:model-value="val => { if (val) proprietario.value = false }"
             />
             <q-checkbox
               v-model="proprietario"
               label="Proprietário"
-              @update:model-value="val => { if (val) inquilino = false }"
+              @update:model-value="val => { if (val) inquilino.value = false }"
             />
           </div>
         </div>
@@ -224,21 +284,26 @@ function removerMorador (row) {
         </div>
       </div>
 
-      <!-- COLUNA DIREITA: CARD COM A TABELA -->
+      <!-- GRID DIREITA -->
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #A5D6A7">Moradores Cadastrados</div>
+            <div class="q-pa-lg" style="background-color: #A5D6A7">
+              Moradores Cadastrados
+            </div>
           </q-card-section>
+
           <q-separator />
+
           <q-card-section class="bg-green-4">
             <q-table
               :rows="moradorStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #d9f8db "
+              style="background-color: #d9f8db"
               table-header-class="bg-green-2"
-              class="full-width"            >
+              class="full-width"
+            >
               <!-- NOME -->
               <template #body-cell-nome="props">
                 <q-td :props="props">
@@ -287,6 +352,18 @@ function removerMorador (row) {
                 </q-td>
               </template>
 
+              <!-- APARTAMENTO -->
+              <template #body-cell-numeroApartamento="props">
+                <q-td :props="props">
+                  <template v-if="editingId === String(props.row.id)">
+                    <q-input v-model="editForm.numeroApartamento" dense outlined />
+                  </template>
+                  <template v-else>
+                    {{ props.row.numeroApartamento }}
+                  </template>
+                </q-td>
+              </template>
+
               <!-- TIPO (INQUILINO / PROPRIETÁRIO) -->
               <template #body-cell-tipo="props">
                 <q-td :props="props">
@@ -319,7 +396,6 @@ function removerMorador (row) {
               <!-- AÇÕES -->
               <template #body-cell-actions="props">
                 <q-td :props="props">
-                  <!-- MODO EDIÇÃO -->
                   <template v-if="editingId === String(props.row.id)">
                     <q-btn
                       label="SALVAR"
@@ -363,13 +439,13 @@ function removerMorador (row) {
     </div>
   </q-page>
 </template>
+
 <style scoped>
 .card-verde {
-  background-color: #66BB6A !important; /* Verde igual aos botões */
+  background-color: #66BB6A !important;
   border: none !important;
 }
 
-/* Deixa o título sem aquele fundo branco */
 .card-verde .q-card__section {
   background-color: #66BB6A !important;
   color: black !important;

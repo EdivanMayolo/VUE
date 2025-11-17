@@ -1,77 +1,146 @@
 {
   "apartamentos": [
     {
-      "id": "86ba",
+      "id": "f191",
       "numero": "101",
       "andar": "1",
-      "bloco": "Sul"
+      "bloco": "NORTE"
     },
     {
-      "id": "e8f6",
-      "numero": "102",
-      "andar": "1",
-      "bloco": "Sul"
+      "id": "6d37",
+      "numero": "202",
+      "andar": "2",
+      "bloco": "SUL"
+    },
+    {
+      "id": "8e59",
+      "numero": "303",
+      "andar": "3",
+      "bloco": "LESTE"
+    },
+    {
+      "id": "f689",
+      "numero": "404",
+      "andar": "4",
+      "bloco": "OESTE"
     }
   ],
   "morador": [
     {
-      "id": "8b26",
-      "nome": "Edivan Mayolo",
-      "cpf": "012.012.741-82",
-      "telefone": "(49) 98832-0675",
+      "id": "5054",
+      "nome": "Edivan ",
+      "cpf": "999.999.999-99",
+      "telefone": "(49) 99999-9999",
       "email": "",
       "inquilino": false,
-      "proprietario": true
+      "proprietario": true,
+      "numeroApartamento": "101"
     },
     {
-      "id": "3c8e",
-      "nome": "João Pedro Mayolo",
-      "cpf": "014.014.014-74",
-      "telefone": "(99) 99988-7744",
-      "email": "teste@gmail.com",
-      "inquilino": true,
-      "proprietario": false
+      "id": "ee2f",
+      "nome": "Leide",
+      "cpf": "111.111.111-11",
+      "telefone": "(49) 11111-1111",
+      "email": "",
+      "inquilino": false,
+      "proprietario": true,
+      "numeroApartamento": "202"
+    },
+    {
+      "id": "8943",
+      "nome": "João Pedro",
+      "cpf": "333.333.333-33",
+      "telefone": "(49) 33333-3333",
+      "email": "",
+      "inquilino": false,
+      "proprietario": true,
+      "numeroApartamento": "303"
+    },
+    {
+      "id": "41e9",
+      "nome": "TESTE",
+      "cpf": "444.444.444-44",
+      "telefone": "(99) 99999-9999",
+      "email": "",
+      "inquilino": false,
+      "proprietario": true,
+      "numeroApartamento": "404"
     }
   ],
   "despesa_fixa": [
     {
-      "id": "0af9",
+      "id": "102e",
       "descricao": "Internet",
       "valor": 100
     },
     {
-      "id": "327a",
-      "descricao": "Síndico",
-      "valor": 100
+      "id": "793b",
+      "descricao": "Faxina",
+      "valor": 1000
+    },
+    {
+      "id": "235f",
+      "descricao": "Sindico",
+      "valor": 1200
     }
   ],
   "despesa_variavel": [
     {
-      "id": "60b7",
-      "descricao": "Água",
-      "valor": 100
+      "id": "da2e",
+      "descricao": "Agua",
+      "valor": 1200
     },
     {
-      "id": "cd2f",
-      "descricao": "Energia Elétrica",
-      "valor": 100
+      "id": "d37e",
+      "descricao": "Luz",
+      "valor": 170
     },
     {
-      "id": "744d",
-      "descricao": "Gás",
-      "valor": 100
+      "id": "deb7",
+      "descricao": "Gás ",
+      "valor": 780
     }
   ],
   "fatura": [
     {
-      "id": "1b37",
+      "id": "e25a",
       "numeroApto": "101",
+      "mes": "12",
+      "ano": "2025",
+      "valorFixo": 575,
+      "valorVariavel": 537.5,
+      "valorTotal": 1112.5,
+      "dataVencimento": "15/11/2025"
+    },
+    {
+      "id": "3e65",
+      "numeroApto": "202",
+      "mes": "12",
+      "ano": "2025",
+      "valorFixo": 575,
+      "valorVariavel": 537.5,
+      "valorTotal": 1112.5,
+      "dataVencimento": "15/11/2025"
+    },
+    {
+      "id": "e371",
+      "numeroApto": "303",
       "mes": "11",
       "ano": "2025",
-      "valorFixo": 100,
-      "valorVariavel": 150,
-      "valorTotal": 250,
-      "dataVencimento": "10/11/2025"
+      "valorFixo": 575,
+      "valorVariavel": 537.5,
+      "valorTotal": 1112.5,
+      "dataVencimento": "15/11/2025"
+    },
+    {
+      "id": "6dbd",
+      "numeroApto": "404",
+      "mes": "11",
+      "ano": "2025",
+      "valorFixo": 575,
+      "valorVariavel": 537.5,
+      "valorTotal": 1112.5,
+      "dataVencimento": "15/11/2025"
     }
   ],
   "pedidos": []
