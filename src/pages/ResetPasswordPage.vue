@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center " style="background-color: #A5D6A7">
+      <q-page class="flex flex-center " style="background-color: #c5f1c7">
         <div class="reset-box">
           <div class="text-h5 q-mb-md text-center text-weight-bold">
             REDEFINIR SENHA

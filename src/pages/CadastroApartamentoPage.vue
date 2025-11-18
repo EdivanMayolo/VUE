@@ -113,7 +113,7 @@ function removerApartamento (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #ace2ae">
+  <q-page class="q-pa-lg" style="background-color: #c5f1c7">
     <div class="row q-col-gutter-xl">
       <div class="col-12 col-md-5">
         <div class="text-h4 q-mr-sm">

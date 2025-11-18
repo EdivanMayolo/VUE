@@ -193,7 +193,7 @@ function removerMorador (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
+  <q-page class="q-pa-lg" style="background-color: #c5f1c7">
     <div class="row q-col-gutter-md">
       <!-- FORM ESQUERDO -->
       <div class="col-12 col-md-4">

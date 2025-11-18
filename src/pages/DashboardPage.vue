@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
+  <q-page class="q-pa-lg" style="background-color: #c5f1c7">
     <div class="row q-col-gutter-lg">
       <!-- Coluna esquerda (gráficos grandes) -->
       <div class="col-12 col-md-8">

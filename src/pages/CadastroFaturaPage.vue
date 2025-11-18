@@ -7,6 +7,7 @@ import { useApartamentoStore } from 'src/stores/apartamento-store'
 import { useDespesaFixaStore } from 'src/stores/despesa_fixa.store'
 import { useDespesaVariavelStore } from 'src/stores/despesa_variavel-store'
 import { useFaturaStore } from 'src/stores/fatura-store'
+import { useMoradorStore } from 'src/stores/morador-store' // <-- para master-detail
 
 const router = useRouter()
 const $q = useQuasar()
@@ -15,6 +16,7 @@ const apartamentoStore = useApartamentoStore()
 const despesaFixaStore = useDespesaFixaStore()
 const despesaVariavelStore = useDespesaVariavelStore()
 const faturaStore = useFaturaStore()
+const moradorStore = useMoradorStore()
 
 // -------- FORM --------
 const numeroApto = ref(null)
@@ -33,7 +35,8 @@ function resetForm () {
   mesAnoData.value = ''
 }
 
-// quando escolher uma data no calendário, atualiza MÊS e ANO
+// quando escolher uma data no calendário,
+// atualiza MÊS e ANO
 function onPickMesAno (val) {
   mesAnoData.value = val
   // com mask="YYYY-MM-DD" o valor vem tipo "2025-11-15"
@@ -50,9 +53,7 @@ const aptoOptions = computed(() =>
   }))
 )
 
-// -------- CÁLCULOS --------
-
-// TOTAL do condomínio (soma de tudo que está cadastrado)
+// -------- CÁLCULOS POR APARTAMENTO --------
 const totalFixas = computed(() =>
   despesaFixaStore.lista.reduce(
     (soma, d) => soma + Number(d.valor || 0),
@@ -67,16 +68,16 @@ const totalVariaveis = computed(() =>
   )
 )
 
-const totalCondominio = computed(
-  () => totalFixas.value + totalVariaveis.value
-)
-
-// QTD de apartamentos
 const qtdAptos = computed(() =>
   apartamentoStore.lista.length > 0 ? apartamentoStore.lista.length : 1
 )
 
-// VALORES POR APTO (rateio)
+// valores TOTAIS (para o formulário da esquerda)
+const valorFixoTotal = computed(() => totalFixas.value)
+const valorVariavelTotal = computed(() => totalVariaveis.value)
+const valorTotalGeral = computed(() => valorFixoTotal.value + valorVariavelTotal.value)
+
+// valores POR APTO (os que vão pra fatura)
 const valorFixoPorApto = computed(() =>
   qtdAptos.value ? totalFixas.value / qtdAptos.value : 0
 )
@@ -91,7 +92,7 @@ const valorTotalPorApto = computed(() =>
 
 function formatMoeda (valor) {
   if (valor == null || isNaN(valor)) return ''
-  return valor.toLocaleString('pt-BR', {
+  return Number(valor).toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   })
@@ -105,19 +106,49 @@ const columns = [
   { name: 'numeroApto', label: 'Apto', field: 'numeroApto' },
   { name: 'mes', label: 'Mês', field: 'mes' },
   { name: 'ano', label: 'Ano', field: 'ano' },
-  { name: 'valorFixo', label: 'Fixo por APTO', field: 'valorFixo' },
-  { name: 'valorVariavel', label: 'Variável por APTO', field: 'valorVariavel' },
-  { name: 'valorTotal', label: 'Total', field: 'valorTotal' },
+  { name: 'valorFixo', label: 'Valor Fixo por Apto', field: 'valorFixo' },
+  { name: 'valorVariavel', label: 'Valor Variável por Apto', field: 'valorVariavel' },
+  { name: 'valorTotal', label: 'Total por Apto', field: 'valorTotal' },
   { name: 'dataVencimento', label: 'Vencimento', field: 'dataVencimento' },
   { name: 'actions', label: 'Ações', field: 'actions', sortable: false }
 ]
+
+// -------- MASTER-DETAIL POPUP --------
+const showFaturasDialog = ref(false)
+
+const columnsDetalhe = [
+  { name: 'numeroApto', label: 'Apto', field: 'numeroApto' },
+  { name: 'nome', label: 'Nome Morador', field: 'nome' },
+  { name: 'cpf', label: 'CPF', field: 'cpf' },
+  { name: 'dataVencimento', label: 'Vencimento', field: 'dataVencimento' },
+  { name: 'valorTotal', label: 'Valor Total', field: 'valorTotal' }
+]
+
+// join fatura + morador
+const faturasDetalhadas = computed(() =>
+  faturaStore.lista.map(f => {
+    const morador = moradorStore.lista.find(
+      m => String(m.numeroApartamento) === String(f.numeroApto)
+    )
+
+    return {
+      id: f.id,
+      numeroApto: f.numeroApto,
+      nome: morador?.nome ?? 'N/A',
+      cpf: morador?.cpf ?? 'N/A',
+      dataVencimento: f.dataVencimento,
+      valorTotal: f.valorTotal
+    }
+  })
+)
 
 onMounted(async () => {
   await Promise.all([
     apartamentoStore.carregarTodos(),
     despesaFixaStore.carregarTodos(),
     despesaVariavelStore.carregarTodos(),
-    faturaStore.carregarTodos?.()
+    faturaStore.carregarTodos?.(),
+    moradorStore.carregarTodos?.()
   ])
 })
 
@@ -148,7 +179,6 @@ async function salvarFatura () {
     numeroApto: numeroApto.value,
     mes: mes.value,
     ano: ano.value,
-    // SEMPRE salva POR APTO
     valorFixo: Number(valorFixoPorApto.value.toFixed(2)),
     valorVariavel: Number(valorVariavelPorApto.value.toFixed(2)),
     valorTotal: Number(valorTotalPorApto.value.toFixed(2)),
@@ -158,7 +188,7 @@ async function salvarFatura () {
   try {
     await faturaStore.criar(payload)
     $q.notify({
-      type: 'secondary',
+      type: 'positive',
       message: 'Fatura cadastrada com sucesso'
     })
     resetForm()
@@ -178,6 +208,9 @@ function habilitarEdicao (row) {
     numeroApto: row.numeroApto,
     mes: row.mes,
     ano: row.ano,
+    valorFixo: row.valorFixo,
+    valorVariavel: row.valorVariavel,
+    valorTotal: row.valorTotal,
     dataVencimento: row.dataVencimento
   }
 }
@@ -189,16 +222,7 @@ function cancelarEdicao () {
 
 async function salvarEdicao (row) {
   try {
-    const payload = {
-      ...editForm.value,
-      // continua usando os valores POR APTO
-      valorFixo: Number(valorFixoPorApto.value.toFixed(2)),
-      valorVariavel: Number(valorVariavelPorApto.value.toFixed(2)),
-      valorTotal: Number(valorTotalPorApto.value.toFixed(2))
-    }
-
-    await faturaStore.atualizar(row.id, payload)
-
+    await faturaStore.atualizar(row.id, { ...editForm.value })
     $q.notify({
       type: 'positive',
       message: 'Fatura atualizada com sucesso'
@@ -245,17 +269,14 @@ function voltarMenu () {
   router.push('/dashboard')
 }
 
+// agora abre o popup de master-detail
 function abrirFaturas () {
-  $q.notify({
-    type: 'info',
-    message: 'Aqui futuramente vai abrir a fatura completa.',
-    position: 'top'
-  })
+  showFaturasDialog.value = true
 }
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #A5D6A7">
+  <q-page class="q-pa-lg" style="background-color: #81C784">
     <div class="row q-col-gutter-md">
       <!-- FORM ESQUERDA -->
       <div class="col-12 col-md-4">
@@ -268,7 +289,7 @@ function abrirFaturas () {
           <q-select
             v-model="numeroApto"
             :options="aptoOptions"
-            label="Número do Apto *"
+            label="Número do APTO *"
             filled
             dense
             emit-value
@@ -283,7 +304,9 @@ function abrirFaturas () {
             label="Mês *"
             filled
             dense
-            readonly            
+            readonly
+            clearable
+            append-inner-icon="event"
           >
             <template #append>
               <q-icon name="event" class="cursor-pointer">
@@ -292,7 +315,8 @@ function abrirFaturas () {
                     v-model="mesAnoData"
                     mask="YYYY-MM-DD"
                     color="positive"
-                    text-color="black"                    
+                    text-color="black"
+                    minimal
                     @update:model-value="onPickMesAno"
                   />
                 </q-popup-proxy>
@@ -306,7 +330,8 @@ function abrirFaturas () {
             label="Ano *"
             filled
             dense
-            readonly
+            clearable
+            append-inner-icon="event"
           >
             <template #append>
               <q-icon name="event" class="cursor-pointer">
@@ -315,13 +340,16 @@ function abrirFaturas () {
                     v-model="mesAnoData"
                     mask="YYYY-MM-DD"
                     color="positive"
-                    text-color="black"                    
+                    text-color="black"
+                    minimal
+                    @update:model-value="onPickMesAno"
                   />
                 </q-popup-proxy>
               </q-icon>
             </template>
           </q-input>
 
+          <!-- DATA VENCIMENTO -->
           <q-input
             v-model="dataVencimento"
             label="Data de Vencimento *"
@@ -343,37 +371,57 @@ function abrirFaturas () {
             </template>
           </q-input>
 
-
-          <!-- TOTAIS DO CONDOMÍNIO -->
+          <!-- VALORES TOTAIS (condomínio inteiro) -->
           <q-input
-            :model-value="`R$ ${formatMoeda(totalFixas)}`"
-            label="Valor Fixo TOTAL"
+            :model-value="`R$ ${formatMoeda(valorFixoTotal)}`"
+            label="Total Despesas Fixas"
+            filled
+            dense
+            readonly
+          />
+          <q-input
+            :model-value="`R$ ${formatMoeda(valorVariavelTotal)}`"
+            label="Total Despesas Variáveis"
+            filled
+            dense
+            readonly
+          />
+          <q-input
+            :model-value="`R$ ${formatMoeda(valorTotalGeral)}`"
+            label="Total Geral"
             filled
             dense
             readonly
           />
 
-          <q-input
-            :model-value="`R$ ${formatMoeda(totalVariaveis)}`"
-            label="Valor Variável TOTAL"
+          <!-- VALORES POR APTO (o que entra na fatura) -->
+          <!-- <q-input
+            :model-value="`R$ ${formatMoeda(valorFixoPorApto)}`"
+            label="Valor Fixo por APTO"
             filled
             dense
             readonly
           />
-
           <q-input
-            :model-value="`R$ ${formatMoeda(totalCondominio)}`"
-            label="Valor TOTAL do Condomínio"
+            :model-value="`R$ ${formatMoeda(valorVariavelPorApto)}`"
+            label="Valor Variável por APTO"
             filled
             dense
             readonly
           />
+          <q-input
+            :model-value="`R$ ${formatMoeda(valorTotalPorApto)}`"
+            label="Valor Total por APTO"
+            filled
+            dense
+            readonly
+          /> -->
         </div>
 
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #66BB6A"
+            color="positive"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -381,7 +429,7 @@ function abrirFaturas () {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #66BB6A"
+            color="positive"
             text-color="black"
             class="q-mr-lg"
             @click="voltarMenu"
@@ -391,7 +439,7 @@ function abrirFaturas () {
         <div class="botao-faturas-container">
           <q-btn
             label="FATURAS"
-            style="background-color: #66BB6A"
+            color="positive"
             text-color="black"
             class="btn-acao"
             @click="abrirFaturas"
@@ -403,7 +451,9 @@ function abrirFaturas () {
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">Faturas Cadastradas</div>
+            <div class="q-pa-lg" style="background-color: #a5d6a7">
+              Faturas Cadastradas
+            </div>
           </q-card-section>
           <q-separator />
           <q-card-section class="bg-green-4">
@@ -411,26 +461,25 @@ function abrirFaturas () {
               :rows="faturaStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #d9f8db"
+              color="green"
               table-header-class="bg-green-2"
               class="full-width"
             >
-              <!-- formato moeda (POR APTO) -->
               <template #body-cell-valorFixo="props">
                 <q-td :props="props">
-                  R$ {{ formatMoeda(Number(props.row.valorFixo || 0)) }}
+                  R$ {{ formatMoeda(props.row.valorFixo) }}
                 </q-td>
               </template>
 
               <template #body-cell-valorVariavel="props">
                 <q-td :props="props">
-                  R$ {{ formatMoeda(Number(props.row.valorVariavel || 0)) }}
+                  R$ {{ formatMoeda(props.row.valorVariavel) }}
                 </q-td>
               </template>
 
               <template #body-cell-valorTotal="props">
                 <q-td :props="props">
-                  R$ {{ formatMoeda(Number(props.row.valorTotal || 0)) }}
+                  R$ {{ formatMoeda(props.row.valorTotal) }}
                 </q-td>
               </template>
 
@@ -478,6 +527,37 @@ function abrirFaturas () {
         </q-card>
       </div>
     </div>
+
+    <!-- MASTER-DETAIL POPUP -->
+<q-dialog v-model="showFaturasDialog">
+  <q-card style="min-width: 800px; max-width: 80vw;">
+    <q-card-section
+      class="row items-center q-pb-none"
+      style="background-color: #a5d6a7">
+      <div class="text-h5">Faturas X Moradores</div>
+      <q-space />
+
+      <q-btn
+        icon="close"
+        flat
+        round
+        dense
+        v-close-popup
+      />
+    </q-card-section>
+
+    <q-card-section>
+      <q-table
+        :rows="faturasDetalhadas"
+        :columns="columnsDetalhe"
+        row-key="id"
+        flat
+        bordered
+        dense
+      />
+    </q-card-section>
+  </q-card>
+</q-dialog>
   </q-page>
 </template>
 
@@ -496,19 +576,30 @@ function abrirFaturas () {
   align-items: center;
   font-weight: bold;
 }
+
 .card-verde {
-  background-color: #66BB6A !important;
+  background-color: #43a047 !important;
   border: none !important;
 }
+
 .card-verde .q-card__section {
-  background-color: #66BB6A !important;
+  background-color: #43a047 !important;
   color: black !important;
 }
+
 .botao-faturas-container {
-  margin-top: 20px;  
+  margin-top: 20px;
+  display: flex;
   justify-content: left;
 }
-.q-date {
-  --q-primary: #43a047 !important;
+
+@media (max-width: 600px) {
+  .cadastro-fatura-page {
+    align-items: stretch;
+  }
+
+  .botoes-container {
+    flex-direction: column;
+  }
 }
 </style>
