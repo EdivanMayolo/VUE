@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated style="background-color: #66BB6A">
+    <q-header elevated style="background-color: #7fa8bb">
       <q-toolbar>
         <q-btn
           flat
@@ -22,7 +22,7 @@
       show-if-above
       side="left"
       bordered
-      style="background-color: #66BB6A"
+      style="background-color: #7fa8bb"
     >
       <q-list padding>
 

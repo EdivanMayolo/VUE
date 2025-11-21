@@ -276,7 +276,7 @@ function abrirFaturas () {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #81C784">
+  <q-page class="q-pa-lg" style="background-color: #FAF9F6">
     <div class="row q-col-gutter-md">
       <!-- FORM ESQUERDA -->
       <div class="col-12 col-md-4">
@@ -421,7 +421,7 @@ function abrirFaturas () {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            color="positive"
+            style="background-color: #5b8193"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -429,8 +429,8 @@ function abrirFaturas () {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            color="positive"
-            text-color="black"
+            style="background-color: #5b8193"
+            text-color="black"  
             class="q-mr-lg"
             @click="voltarMenu"
           />
@@ -439,7 +439,7 @@ function abrirFaturas () {
         <div class="botao-faturas-container">
           <q-btn
             label="FATURAS"
-            color="positive"
+            style="background-color: #5b8193"
             text-color="black"
             class="btn-acao"
             @click="abrirFaturas"
@@ -451,18 +451,18 @@ function abrirFaturas () {
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">
+            <div class="q-pa-lg" style="background-color: #FAF9F6">
               Faturas Cadastradas
             </div>
           </q-card-section>
           <q-separator />
-          <q-card-section class="bg-green-4">
+          <q-card-section class="" >
             <q-table
               :rows="faturaStore.lista"
               :columns="columns"
               row-key="id"
-              color="green"
-              table-header-class="bg-green-2"
+              color="black"
+              style="background-color: #F5F5F5" 
               class="full-width"
             >
               <template #body-cell-valorFixo="props">
@@ -533,8 +533,8 @@ function abrirFaturas () {
   <q-card style="min-width: 800px; max-width: 80vw;">
     <q-card-section
       class="row items-center q-pb-none"
-      style="background-color: #a5d6a7">
-      <div class="text-h5">Faturas X Moradores</div>
+      style="background-color: #7fa8bb">
+      <div class="text-h5">Faturas X Moradores</div> 
       <q-space />
 
       <q-btn
@@ -554,6 +554,7 @@ function abrirFaturas () {
         flat
         bordered
         dense
+        
       />
     </q-card-section>
   </q-card>
@@ -578,12 +579,12 @@ function abrirFaturas () {
 }
 
 .card-verde {
-  background-color: #43a047 !important;
+  background-color: #5c5c5c !important;
   border: none !important;
 }
 
 .card-verde .q-card__section {
-  background-color: #43a047 !important;
+  background-color: #7fa8bb !important;
   color: black !important;
 }
 
