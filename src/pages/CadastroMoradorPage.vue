@@ -193,7 +193,7 @@ function removerMorador (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #c5f1c7">
+  <q-page class="q-pa-lg" style="background-color: #FAF9F6">
     <div class="row q-col-gutter-md">
       <!-- FORM ESQUERDO -->
       <div class="col-12 col-md-4">
@@ -268,7 +268,7 @@ function removerMorador (row) {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #66BB6A"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -276,7 +276,7 @@ function removerMorador (row) {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #66BB6A"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="btn-acao"
             @click="voltarMenu"
@@ -288,20 +288,20 @@ function removerMorador (row) {
       <div class="col-12 col-md-8">
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #A5D6A7">
+            <div class="q-pa-lg" style="background-color: #FAF9F6">
               Moradores Cadastrados
             </div>
           </q-card-section>
 
           <q-separator />
 
-          <q-card-section class="bg-green-4">
+          <q-card-section>
             <q-table
               :rows="moradorStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #d9f8db"
-              table-header-class="bg-green-2"
+              style="background-color: #F5F5F5"
+              table-header-class="bg-blue-1"
               class="full-width"
             >
               <!-- NOME -->
@@ -442,12 +442,12 @@ function removerMorador (row) {
 
 <style scoped>
 .card-verde {
-  background-color: #66BB6A !important;
+  background-color: #5db0d6 !important;
   border: none !important;
 }
 
 .card-verde .q-card__section {
-  background-color: #66BB6A !important;
+  background-color: #7fa8bb !important;
   color: black !important;
 }
 </style>

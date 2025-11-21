@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center " style="background-color: #c5f1c7">
+      <q-page class="flex flex-center " style="background-color: #5fa5c5">
         <div class="reset-box">
           <div class="text-h5 q-mb-md text-center text-weight-bold">
             REDEFINIR SENHA
@@ -34,7 +34,7 @@
 
             <q-btn
               class="q-mt-md full-width"
-              color="positive"
+              style="background-color: #5fa5c5"
               text-color="black"
               label="ENVIAR"
               type="submit"
@@ -82,10 +82,10 @@ const onSubmit = () => {
   width: 420px;
   max-width: 90vw;
 
-  background: #a5d6a7;        /* verde claro, igual login */
+  background: #7fa5bb;        /* verde claro, igual login */
   padding: 32px;
   border-radius: 16px;
-  border: 2px solid #66bb6a;  /* borda verde */
+  border: 2px solid #0c5f86;  /* borda verde */
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
 
   display: flex;

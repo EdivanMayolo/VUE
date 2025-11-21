@@ -113,7 +113,7 @@ function removerApartamento (row) {
 </script>
 
 <template>
-  <q-page class="q-pa-lg" style="background-color: #c5f1c7">
+  <q-page class="q-pa-lg" style="background-color: #FAF9F6">
     <div class="row q-col-gutter-xl">
       <div class="col-12 col-md-5">
         <div class="text-h4 q-mr-sm">
@@ -148,7 +148,7 @@ function removerApartamento (row) {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #66BB6A"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -156,7 +156,7 @@ function removerApartamento (row) {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #66BB6A"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="btn-acao"
             @click="voltarMenu"/>          
@@ -166,17 +166,17 @@ function removerApartamento (row) {
       <div class="col-12 col-md-7">        
         <q-card flat class="card-verde">
           <q-card-section>
-            <div class="q-pa-lg" style="background-color: #a5d6a7">Apartamentos Cadastrados</div>
+            <div class="q-pa-lg" style="background-color: #FAF9F6">Apartamentos Cadastrados</div>
           </q-card-section>
 
           <q-separator />
-          <q-card-section class="bg-green-4">
+          <q-card-section>
             <q-table              
               :rows="apartamentoStore.lista"
               :columns="columns"
               row-key="id"
-              style="background-color: #d9f8db" 
-              table-header-class="bg-green-2" >
+              style="background-color: #F5F5F5" 
+              table-header-class="bg-blue-1" >
               <template #body-cell-numero="props">
                 <q-td :props="props">
                   <template v-if="editingId === String(props.row.id)">
@@ -256,12 +256,12 @@ function removerApartamento (row) {
 </template>
 <style scoped>
 .card-verde {
-  background-color: #66BB6A !important; /* verde dos botões */
+  background-color: #5db0d6 !important; /* verde dos botões */
   border: none !important;
 }
 
 .card-verde .q-card__section {
-  background-color: #66BB6A !important;
+  background-color: #7fa8bb !important;
   color: black !important;
 }
 </style>

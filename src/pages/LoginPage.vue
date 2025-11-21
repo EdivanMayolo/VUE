@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center " style="background-color: #c5f1c7">
+      <q-page class="flex flex-center " style="background-color: #5fa5c5">
         <div class="login-box">
   <div class="text-h5 q-mb-md">{{ $t('login.title') }}</div>
 
@@ -29,7 +29,7 @@
     <div class="q-mt-xs text-right">
       <q-btn
         flat
-        color="green-9"
+        color="black"
         :label="$t('login.forgot')"
         @click="$router.push('/redefinir-senha')"
       />
@@ -37,7 +37,7 @@
 
     <q-btn
       class="q-mt-md full-width"
-      style="background-color: #66BB6A"
+      style="background-color: #5fa5c5"
       :label="$t('login.submit')"
       type="submit"
     />
@@ -71,10 +71,10 @@ const onSubmit = () => {
   width: 420px;
   max-width: 90vw;
 
-  background: #a5d6a7;
+  background: #7fa8bb;
   padding: 32px;
   border-radius: 16px;
-  border: 2px solid #66bb6a; /* borda */
+  border: 2px solid #0c5f86; /* borda */
   box-shadow: 0 8px 22px rgba(0,0,0,0.18);
 
   display: flex;

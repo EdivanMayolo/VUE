@@ -314,9 +314,9 @@ function abrirFaturas () {
                   <q-date
                     v-model="mesAnoData"
                     mask="YYYY-MM-DD"
-                    color="positive"
+                    color=blue-3
                     text-color="black"
-                    minimal
+                    
                     @update:model-value="onPickMesAno"
                   />
                 </q-popup-proxy>
@@ -339,9 +339,9 @@ function abrirFaturas () {
                   <q-date
                     v-model="mesAnoData"
                     mask="YYYY-MM-DD"
-                    color="positive"
+                    color= blue-3
                     text-color="black"
-                    minimal
+                    
                     @update:model-value="onPickMesAno"
                   />
                 </q-popup-proxy>
@@ -363,7 +363,7 @@ function abrirFaturas () {
                   <q-date
                     v-model="dataVencimento"
                     mask="DD/MM/YYYY"
-                    color="positive"
+                    color= blue-3
                     text-color="black"
                   />
                 </q-popup-proxy>
@@ -421,7 +421,7 @@ function abrirFaturas () {
         <div class="q-mt-xl">
           <q-btn
             label="SALVAR"
-            style="background-color: #5b8193"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="q-mr-lg"
             unelevated
@@ -429,7 +429,7 @@ function abrirFaturas () {
           />
           <q-btn
             label="VOLTAR AO MENU"
-            style="background-color: #5b8193"
+            style="background-color: #5fa5c5"
             text-color="black"  
             class="q-mr-lg"
             @click="voltarMenu"
@@ -439,7 +439,7 @@ function abrirFaturas () {
         <div class="botao-faturas-container">
           <q-btn
             label="FATURAS"
-            style="background-color: #5b8193"
+            style="background-color: #5fa5c5"
             text-color="black"
             class="btn-acao"
             @click="abrirFaturas"
@@ -462,7 +462,8 @@ function abrirFaturas () {
               :columns="columns"
               row-key="id"
               color="black"
-              style="background-color: #F5F5F5" 
+              style="background-color: #F5F5F5"
+              table-header-class="bg-blue-1" 
               class="full-width"
             >
               <template #body-cell-valorFixo="props">
@@ -550,6 +551,7 @@ function abrirFaturas () {
       <q-table
         :rows="faturasDetalhadas"
         :columns="columnsDetalhe"
+        table-header-class="bg-blue-1"
         row-key="id"
         flat
         bordered
@@ -579,7 +581,7 @@ function abrirFaturas () {
 }
 
 .card-verde {
-  background-color: #5c5c5c !important;
+  background-color: #5db0d6 !important;
   border: none !important;
 }
 
