@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center " style="background-color: #5fa5c5">
+      <q-page class="flex flex-center " style="background-color: #327da0">
         <div class="login-box">
   <div class="text-h5 q-mb-md">{{ $t('login.title') }}</div>
 
