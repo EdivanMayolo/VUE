@@ -202,25 +202,32 @@ function removerMorador (row) {
         </div>
 
         <div class="q-gutter-md" style="max-width: 323px">
+        <!-- NOME -->
           <q-input
             v-model="nome"
             label="Nome do Morador *"
             filled
             dense
             clearable
-            append-inner-icon="person"
-          />
-
+          >
+            <template #prepend>
+              <q-icon name="person" />
+            </template>
+          </q-input>
+        <!-- CPF -->
           <q-input
-            v-model="cpf"
-            label="CPF *"
-            filled
-            dense
-            clearable
-            mask="###.###.###-##"
-            append-inner-icon="badge"
-          />
-
+          v-model="cpf"
+          label="CPF *"
+          filled
+          dense
+          clearable
+          mask="###.###.###-##"
+        >
+          <template #prepend>
+            <q-icon name="badge" />
+          </template>
+        </q-input>
+        <!-- TELEFONE -->
           <q-input
             v-model="telefone"
             label="Telefone *"
@@ -228,19 +235,25 @@ function removerMorador (row) {
             dense
             clearable
             mask="(##) #####-####"
-            append-inner-icon="phone"
-          />
-
-          <!-- NÚMERO DO APTO -->
+          >
+            <template #prepend>
+              <q-icon name="phone" />
+            </template>
+          </q-input>
+        <!-- NÚMERO DO APTO -->
           <q-input
             v-model="numeroApartamento"
             label="Número do APTO *"
             filled
             dense
             clearable
-            append-inner-icon="home"
-          />
+          >
+            <template #prepend>
+              <q-icon name="home" />
+            </template>
+          </q-input>
 
+          <!-- EMAIL -->
           <q-input
             v-model="email"
             label="E-mail"
@@ -248,8 +261,12 @@ function removerMorador (row) {
             filled
             dense
             clearable
-            append-inner-icon="email"
-          />
+          >
+            <template #prepend>
+              <q-icon name="email" />
+            </template>
+          </q-input>
+
 
           <div class="row q-gutter-sm q-mt-sm">
             <q-checkbox
