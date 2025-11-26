@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          <!-- Se quiser, coloca o nome do sistema aqui -->
+          <!-- Título opcional -->
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -25,20 +25,17 @@
       style="background-color: #7fa8bb"
     >
       <q-list padding>
-
-        <!-- LINKS PRINCIPAIS -->
         <EssentialLink
           v-for="link in mainLinks"
           :key="link.title"
           v-bind="link"
         />
 
-        <!-- SEÇÃO CADASTROS -->
         <q-separator spaced />
 
         <q-item-label
           header
-          class="text-uppercase text-black q-pa-md font-bold"
+          class="text-uppercase text-black q-pa-md"
         >
           Cadastros
         </q-item-label>
@@ -49,10 +46,9 @@
           v-bind="link"
         />
 
-        <!-- LOGOUT SEPARADO -->
         <q-separator spaced />
-        <EssentialLink v-bind="logoutLink" />
 
+        <EssentialLink v-bind="logoutLink" />
       </q-list>
     </q-drawer>
 
@@ -78,13 +74,15 @@ const mainLinks = [
 
 const cadastroLinks = [
   { title: 'Apartamento',      to: '/apartamento',      icon: 'apartment' },
-  { title: 'Morador',          to: '/morador',          icon: 'people' },
+  { title: 'Morador',          to: '/morador',          icon: 'person' },
   { title: 'Despesa Fixa',     to: '/despesa-fixa',     icon: 'payments' },
   { title: 'Despesa Variavel', to: '/despesa-variavel', icon: 'trending_up' },
   { title: 'Fatura',           to: '/fatura',           icon: 'request_quote' }
 ]
 
 const logoutLink = {
-  title: 'Logout',  to: '/',  icon: 'logout'
+  title: 'Logout',
+  to: '/',
+  icon: 'logout'
 }
 </script>
